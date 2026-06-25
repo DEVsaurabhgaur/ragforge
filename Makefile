@@ -1,20 +1,26 @@
-.PHONY: install run clean format lint test
+.PHONY: install run clean format lint test docker-build docker-run
 
 install:
-	pip install -r requirements.txt
+\tpip install -r requirements.txt
+\tpip install langchain-classic rank_bm25 pytest flake8
 
 run:
-	streamlit run app.py
+\tstreamlit run app.py
 
 clean:
-	rm -rf chroma_db/ uploaded_docs/ .sessions/ __pycache__/ .pytest_cache/ .coverage tests/__pycache__
+\trm -rf chroma_db/ uploaded_docs/ .sessions/ __pycache__/ .pytest_cache/ .coverage tests/__pycache__
 
 format:
-	black . && isort .
+\tblack . && isort .
 
 lint:
-	python -m pip install flake8 && flake8 . --exclude=venv --count --select=E9,F63,F7,F82 --show-source --statistics
+\tflake8 .
 
 test:
-	python -m pytest tests/
+\tpython -m pytest tests/ -v
 
+docker-build:
+\tdocker build -t ragforge:latest .
+
+docker-run:
+\tdocker run -p 8501:8501 --env-file .env ragforge:latest
