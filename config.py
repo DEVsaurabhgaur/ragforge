@@ -1,29 +1,32 @@
+"""
+config.py — Centralised configuration for RAGForge
+"""
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# ── LLM Settings ──────────────────────────────────────────────
+# â”€â”€ LLM Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 LLM_PROVIDER = os.getenv('LLM_PROVIDER', 'gemini')       # 'openai' | 'gemini'
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
 LLM_MODEL_OPENAI = 'gpt-4o-mini'
 LLM_MODEL_GEMINI = 'gemini-2.5-flash'
 
-# ── Embedding Settings ─────────────────────────────────────────
+# â”€â”€ Embedding Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 EMBEDDING_PROVIDER = os.getenv('EMBEDDING_PROVIDER', 'local')  # 'openai' | 'local'
 EMBEDDING_MODEL_OPENAI = 'text-embedding-3-small'
 EMBEDDING_MODEL_LOCAL = 'all-MiniLM-L6-v2'               # free, no API key needed
 
-# ── Chunking Settings ──────────────────────────────────────────
+# â”€â”€ Chunking Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
-# ── Retrieval Settings ─────────────────────────────────────────
+# â”€â”€ Retrieval Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 TOP_K_RESULTS = 4
 RETRIEVAL_MODE = 'hybrid'  # 'semantic' | 'hybrid'
 
-# ── LLM Generation Settings ────────────────────────────────────
+# â”€â”€ LLM Generation Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DEFAULT_TEMPERATURE = 0.3
 DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant that answers questions based ONLY on the provided document context.\nIf the answer is not in the context, say exactly: \"I could not find this in the uploaded documents.\"\nDo NOT use any outside knowledge or make things up."
 
@@ -34,7 +37,7 @@ SYSTEM_PRESETS = {
     "Bullet Summary": "You are a summarization bot. Answer the question using concise bullet points strictly derived from the context. Keep it short."
 }
 
-# ── Storage & Paths ────────────────────────────────────────────
+# â”€â”€ Storage & Paths â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 CHROMA_DB_DIR = './chroma_db'
 UPLOAD_DIR = './uploaded_docs'
 SESSION_DIR = './.sessions'
