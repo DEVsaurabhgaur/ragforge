@@ -13,7 +13,7 @@ format:
 	black . && isort .
 
 lint:
-	python -m pip install flake8 && flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+	python -m pip install flake8 && flake8 . --exclude=venv --count --select=E9,F63,F7,F82 --show-source --statistics
 
 test:
 	python -m pytest tests/
