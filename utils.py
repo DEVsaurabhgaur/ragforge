@@ -1,9 +1,10 @@
 """
-utils.py — Helper functions for RAGForge
+utils.py â€” Helper functions for RAGForge
 """
 import re
 import os
 from pathlib import Path
+from typing import Union
 
 
 def clean_text(text: str) -> str:
@@ -24,7 +25,7 @@ def get_pdf_files_in_dir(directory: str) -> list:
 
 def format_source_display(source_file: str, page: int | str) -> str:
     """Format a source reference for display."""
-    return f"{source_file} — Page {page}"
+    return f"{source_file} â€” Page {page}"
 
 
 def truncate_text(text: str, max_chars: int = 300) -> str:
@@ -78,12 +79,12 @@ def highlight_keywords(text: str, query: str) -> str:
     """Highlight query keywords inside text using safe HTML styling tags."""
     import html
     escaped_text = html.escape(text)
-    
+
     # Extract alphanumeric words of length >= 3
     words = re.findall(r'\b\w{3,}\b', query.lower())
     if not words:
         return escaped_text
-        
+
     # Sort words by length descending to match longer words first
     words = sorted(list(set(words)), key=len, reverse=True)
     for word in words:
