@@ -36,9 +36,10 @@ def truncate_text(text: str, max_chars: int = 300) -> str:
 
 def ensure_dirs():
     """Create required directories if they don't exist."""
-    from config import CHROMA_DB_DIR, UPLOAD_DIR
+    from config import CHROMA_DB_DIR, UPLOAD_DIR, SESSION_DIR
     os.makedirs(CHROMA_DB_DIR, exist_ok=True)
     os.makedirs(UPLOAD_DIR, exist_ok=True)
+    os.makedirs(SESSION_DIR, exist_ok=True)
 
 
 def clear_upload_dir():
@@ -47,3 +48,49 @@ def clear_upload_dir():
     for f in Path(UPLOAD_DIR).glob('*'):
         if f.is_file():
             f.unlink()
+
+
+def count_tokens(text: str, model_name: str = 'gpt-4o-mini') -> int:
+    """Estimate or count the number of tokens in a text string."""
+    try:
+        import tiktoken
+        try:
+            encoding = tiktoken.encoding_for_model(model_name)
+        except KeyError:
+            encoding = tiktoken.get_encoding('cl100k_base')
+        return len(encoding.encode(text))
+    except Exception:
+        # Fallback heuristic: 1 token ~ 4 characters
+        return max(1, len(text) // 4)
+
+
+def estimate_cost(input_tokens: int, output_tokens: int, provider: str = 'openai') -> float:
+    """Estimate cost in USD based on input/output token counts."""
+    if provider.lower() == 'openai':
+        # gpt-4o-mini pricing: $0.15 / 1M input tokens, $0.60 / 1M output tokens
+        return (input_tokens * 0.15 + output_tokens * 0.60) / 1_000_000
+    else:
+        # gemini-2.5-flash: $0.075 / 1M input tokens, $0.30 / 1M output tokens
+        return (input_tokens * 0.075 + output_tokens * 0.30) / 1_000_000
+
+
+def highlight_keywords(text: str, query: str) -> str:
+    """Highlight query keywords inside text using safe HTML styling tags."""
+    import html
+    escaped_text = html.escape(text)
+    
+    # Extract alphanumeric words of length >= 3
+    words = re.findall(r'\b\w{3,}\b', query.lower())
+    if not words:
+        return escaped_text
+        
+    # Sort words by length descending to match longer words first
+    words = sorted(list(set(words)), key=len, reverse=True)
+    for word in words:
+        pattern = re.compile(rf'\b({re.escape(word)})\b', re.IGNORECASE)
+        escaped_text = pattern.sub(
+            r'<mark style="background-color: rgba(245, 158, 11, 0.25); color: #fbbf24; padding: 2px 4px; border-radius: 4px; font-weight: bold;">\1</mark>',
+            escaped_text
+        )
+    return escaped_text
+

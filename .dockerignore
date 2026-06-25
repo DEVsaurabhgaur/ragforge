@@ -1,0 +1,13 @@
+venv/
+chroma_db/
+uploaded_docs/
+.sessions/
+__pycache__/
+.git/
+.github/
+.pytest_cache/
+tests/
+.env
+*.json
+*.md
+Makefile

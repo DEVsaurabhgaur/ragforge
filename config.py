@@ -21,8 +21,23 @@ CHUNK_OVERLAP = 200
 
 # ── Retrieval Settings ─────────────────────────────────────────
 TOP_K_RESULTS = 4
+RETRIEVAL_MODE = 'hybrid'  # 'semantic' | 'hybrid'
 
-# ── Storage ────────────────────────────────────────────────────
+# ── LLM Generation Settings ────────────────────────────────────
+DEFAULT_TEMPERATURE = 0.3
+DEFAULT_SYSTEM_PROMPT = "You are a helpful assistant that answers questions based ONLY on the provided document context.\nIf the answer is not in the context, say exactly: \"I could not find this in the uploaded documents.\"\nDo NOT use any outside knowledge or make things up."
+
+# Preset System Prompts
+SYSTEM_PRESETS = {
+    "Strict Q&A": "You are a precise assistant. Answer the user's question using ONLY the provided context. If the context does not contain the answer, reply exactly: \"I could not find this in the uploaded documents.\" Do not synthesize outside facts.",
+    "Detailed Explainer": "You are a thorough educational assistant. Answer using the context in a detailed, structured, step-by-step manner. Include citations. Do not make up facts outside the context.",
+    "Bullet Summary": "You are a summarization bot. Answer the question using concise bullet points strictly derived from the context. Keep it short."
+}
+
+# ── Storage & Paths ────────────────────────────────────────────
 CHROMA_DB_DIR = './chroma_db'
 UPLOAD_DIR = './uploaded_docs'
+SESSION_DIR = './.sessions'
 COLLECTION_NAME = 'ragforge_docs'
+SUPPORTED_EXTENSIONS = ['.pdf', '.txt', '.md']
+
