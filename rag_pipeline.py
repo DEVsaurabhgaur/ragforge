@@ -104,7 +104,6 @@ def build_vectorstore(file_paths: List[str], chunk_size: int = None, chunk_overl
     Embed all documents and store in ChromaDB.
     Clears cache and deletes existing collection first. Returns vectorstore.
     """
-    global _VECTORSTORE_CACHE
     _VECTORSTORE_CACHE.clear()
 
     all_chunks: List[Document] = []
