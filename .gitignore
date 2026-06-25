@@ -1,13 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+venv/
 .env
+.env.*
+!.env.example
+
+# RAGForge data
 chroma_db/
 uploaded_docs/
-__pycache__/
-*.pyc
-*.pyo
-.DS_Store
-*.egg-info/
+.sessions/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Build
 dist/
 build/
-venv/
-.venv/
-*.log
+*.egg-info/
