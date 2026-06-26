@@ -113,3 +113,31 @@ def test_remove_stopwords_preserves_non_stopwords():
     assert "machine" in result
     assert "learning" in result
     assert "algorithms" in result
+
+
+# ── is_valid_collection_name tests ──────────────────────────────────────
+from utils import is_valid_collection_name
+
+
+def test_valid_collection_name():
+    assert is_valid_collection_name("ragforge_docs") is True
+
+
+def test_valid_collection_name_with_hyphens():
+    assert is_valid_collection_name("my-collection-1") is True
+
+
+def test_invalid_collection_name_too_short():
+    assert is_valid_collection_name("ab") is False
+
+
+def test_invalid_collection_name_too_long():
+    assert is_valid_collection_name("a" * 64) is False
+
+
+def test_invalid_collection_name_special_chars():
+    assert is_valid_collection_name("my collection!") is False
+
+
+def test_invalid_collection_name_starts_with_underscore():
+    assert is_valid_collection_name("_mycoll") is False
