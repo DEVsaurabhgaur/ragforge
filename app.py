@@ -456,8 +456,13 @@ with st.sidebar:
             min_value=1,
             max_value=10,
             value=config.TOP_K_RESULTS,
-            step=1
+            step=1,
+            help="Number of document chunks to retrieve and pass to the LLM as context. Higher values improve recall but increase cost."
         )
+
+        # Embedding model display
+        emb_model = config.EMBEDDING_MODEL_OPENAI if config.EMBEDDING_PROVIDER == "openai" else config.EMBEDDING_MODEL_LOCAL
+        st.caption(f"🖊️ Embeddings: `{emb_model}`")
 
         # Chunk parameters
         chunk_size = st.slider(
