@@ -27,7 +27,7 @@ def clear_vectorstore_cache() -> None:
 
 
 def get_embeddings():
-    """Return embedding model based on config."""
+    """Return embedding model based on config LLM provider setting."""
     if config.EMBEDDING_PROVIDER == 'openai':
         from langchain_openai import OpenAIEmbeddings
         return OpenAIEmbeddings(
@@ -40,7 +40,14 @@ def get_embeddings():
 
 
 def get_llm(temperature: float = None):
-    """Return LLM based on config."""
+    """Return LLM based on config provider setting.
+
+    Args:
+        temperature: Override the default temperature. If None, uses config.DEFAULT_TEMPERATURE.
+
+    Returns:
+        A LangChain chat model (ChatOpenAI or ChatGoogleGenerativeAI).
+    """
     temp = temperature if temperature is not None else config.DEFAULT_TEMPERATURE
     if config.LLM_PROVIDER == 'openai':
         from langchain_openai import ChatOpenAI
