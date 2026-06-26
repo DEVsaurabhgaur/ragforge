@@ -54,8 +54,8 @@ def truncate_text(text: str, max_chars: int = 300) -> str:
 
 
 def word_count(text: str) -> int:
-    """Count the number of words in a string."""
-    return len(_RE_WORDS.findall(text))
+    """Count the number of words in a string in a memory-efficient way."""
+    return sum(1 for _ in _RE_WORDS.finditer(text))
 
 
 def sanitize_filename(name: str) -> str:
