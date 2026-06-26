@@ -20,6 +20,10 @@ from utils import clean_text, count_tokens, estimate_cost
 # Cache dictionary to prevent repeated database connections and file locks on Windows
 _VECTORSTORE_CACHE: dict = {}
 
+# Precompiled regular expressions for optimization
+_RE_WORDS_GE3 = re.compile(r'\b\w{3,}\b')
+_RE_LEADING_NUMBERS = re.compile(r'^\d+[\.\-\s]+')
+
 
 def clear_vectorstore_cache() -> None:
     """Clear the in-memory vectorstore cache to free references and allow re-initialization."""
@@ -196,14 +200,14 @@ def rerank_documents(docs: List[Document], query: str) -> List[Document]:
     - Length normalization: divides by log of document length to avoid bias toward longer docs
     - Phrase match bonus: 1.5 extra points if the full query appears verbatim
     """
-    query_words = set(re.findall(r'\b\w{3,}\b', query.lower()))
+    query_words = set(_RE_WORDS_GE3.findall(query.lower()))
     if not query_words:
         return docs
 
     import math
     scored_docs = []
     for doc in docs:
-        content_words = set(re.findall(r'\b\w{3,}\b', doc.page_content.lower()))
+        content_words = set(_RE_WORDS_GE3.findall(doc.page_content.lower()))
         doc_len = max(1, len(content_words))
         overlap = len(query_words.intersection(content_words))
         # Length-normalize: reward density over sheer count
@@ -230,7 +234,7 @@ QUESTION: {query}
         variations = [line.strip() for line in response.content.split('\n') if line.strip()]
         cleaned_variations = []
         for v in variations:
-            v_clean = re.sub(r'^\d+[\.\-\s]+', '', v).strip('"\'')
+            v_clean = _RE_LEADING_NUMBERS.sub('', v).strip('"\'')
             if v_clean:
                 cleaned_variations.append(v_clean)
         return [query] + cleaned_variations[:2]
