@@ -705,9 +705,22 @@ with st.sidebar:
             key="session_select"
         )
         if selected_session != "-- Select --":
-            if st.button("📂 Load Session", use_container_width=True):
-                load_session(selected_session)
-                st.rerun()
+            col_l, col_d = st.columns(2)
+            with col_l:
+                if st.button("📂 Load Session", use_container_width=True):
+                    load_session(selected_session)
+                    st.rerun()
+            with col_d:
+                if st.button("🗑️ Delete Session", use_container_width=True):
+                    fpath = os.path.join(config.SESSION_DIR, selected_session)
+                    try:
+                        if os.path.exists(fpath):
+                            os.unlink(fpath)
+                            log_diagnostic(f"Deleted saved session file: {selected_session}")
+                            st.success(f"Deleted {selected_session}")
+                            st.rerun()
+                    except Exception as de:
+                        st.error(f"Failed to delete session: {de}")
 
     # ── Save current session trigger ──
     if st.session_state.messages:
