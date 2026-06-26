@@ -840,9 +840,14 @@ for msg in st.session_state.messages:
                     )
 
 # Chat Input & Ingestion
+MAX_QUERY_CHARS = 2000
 if question := st.chat_input("Ask a question about your documents..."):
     if "vectorstore" not in st.session_state:
         st.warning("⚠️ Please upload and ingest documents first!")
+    elif len(question.strip()) == 0:
+        st.warning("⚠️ Please enter a non-empty question.")
+    elif len(question) > MAX_QUERY_CHARS:
+        st.warning(f"⚠️ Your question is {len(question)} characters. Limit is {MAX_QUERY_CHARS}. Please shorten your query.")
     else:
         # Show User Message
         st.session_state.messages.append({"role": "user", "content": question})
