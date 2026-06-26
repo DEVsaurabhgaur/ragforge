@@ -16,8 +16,12 @@ for pkg in REQUIRED:
     except ImportError:
         missing.append(pkg)
 
+GREEN = "\033[92m"
+RED = "\033[91m"
+RESET = "\033[0m"
+
 if missing:
-    print(f"Missing packages ({len(missing)}): {', '.join(missing)}")
-    print("Run: pip install -r requirements-dev.txt")
+    print(f"{RED}✗ Missing packages ({len(missing)}): {', '.join(missing)}{RESET}")
+    print(f"Run: {RED}pip install -r requirements-dev.txt{RESET}")
 else:
-    print(f"All {len(REQUIRED)} required packages are installed ✓")
+    print(f"{GREEN}✓ All {len(REQUIRED)} required packages are installed{RESET}")
