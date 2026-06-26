@@ -373,6 +373,19 @@ def save_current_session(name: str = None):
     st.session_state["current_session_file"] = filename
     log_diagnostic(f"Session saved to {filename}")
 
+    # Enforce limit of max 50 saved sessions to avoid disk clutter
+    try:
+        session_files = sorted(Path(config.SESSION_DIR).glob("*.json"), key=os.path.getmtime)
+        if len(session_files) > 50:
+            for old_file in session_files[:-50]:
+                try:
+                    old_file.unlink()
+                    log_diagnostic(f"Deleted oldest session file to keep limit: {old_file.name}")
+                except Exception as de:
+                    logging.warning(f"Failed to delete old session {old_file.name}: {de}")
+    except Exception as se:
+        logging.warning(f"Failed to prune saved sessions: {se}")
+
 
 def load_session(filename: str):
     """Load chat history and document context from session file."""
