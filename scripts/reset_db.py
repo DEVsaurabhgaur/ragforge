@@ -12,15 +12,27 @@ import config
 
 def reset_db():
     if os.path.exists(config.CHROMA_DB_DIR):
-        shutil.rmtree(config.CHROMA_DB_DIR)
-        print(f"Deleted vectorstore at: {config.CHROMA_DB_DIR}")
+        try:
+            shutil.rmtree(config.CHROMA_DB_DIR)
+            print(f"Deleted vectorstore at: {config.CHROMA_DB_DIR}")
+        except OSError as e:
+            print(f"Warning: Could not delete vectorstore directory {config.CHROMA_DB_DIR} ({e}). It might be locked by another process.")
     else:
         print("No vectorstore found — nothing to delete.")
 
     if os.path.exists(config.UPLOAD_DIR):
+        deleted_count = 0
         for f in os.listdir(config.UPLOAD_DIR):
-            os.remove(os.path.join(config.UPLOAD_DIR, f))
-        print(f"Cleared upload directory: {config.UPLOAD_DIR}")
+            fpath = os.path.join(config.UPLOAD_DIR, f)
+            try:
+                if os.path.isfile(fpath) or os.path.islink(fpath):
+                    os.unlink(fpath)
+                elif os.path.isdir(fpath):
+                    shutil.rmtree(fpath)
+                deleted_count += 1
+            except Exception as e:
+                print(f"Warning: Could not delete {fpath} ({e})")
+        print(f"Cleared {deleted_count} file(s) from upload directory: {config.UPLOAD_DIR}")
 
     print("Reset complete.")
 
