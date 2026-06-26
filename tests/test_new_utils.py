@@ -86,3 +86,30 @@ def test_truncate_text_exact_boundary():
     text = "one two"
     result = truncate_text(text, 7)
     assert result == "one two"
+
+
+# ── remove_stopwords tests ────────────────────────────────────────────────
+from utils import remove_stopwords
+
+
+def test_remove_stopwords_basic():
+    result = remove_stopwords("the quick brown fox")
+    assert "the" not in result.split()
+    assert "quick" in result
+    assert "fox" in result
+
+
+def test_remove_stopwords_all_stopwords():
+    result = remove_stopwords("a an the and or")
+    assert result.strip() == ""
+
+
+def test_remove_stopwords_empty():
+    assert remove_stopwords("") == ""
+
+
+def test_remove_stopwords_preserves_non_stopwords():
+    result = remove_stopwords("machine learning algorithms")
+    assert "machine" in result
+    assert "learning" in result
+    assert "algorithms" in result
