@@ -355,7 +355,8 @@ def query_rag(
     k_results: int = 4,
     temperature: float = 0.3,
     system_prompt: str = None,
-    use_expansion: bool = False
+    use_expansion: bool = False,
+    filter_source: str = None
 ) -> Dict[str, Any]:
     """
     Execute conversational RAG query pipeline.
@@ -391,6 +392,10 @@ def query_rag(
         docs = docs[:k_results]
     else:
         docs = retriever.invoke(standalone_query)
+
+    # Optional source filtering
+    if filter_source:
+        docs = [doc for doc in docs if doc.metadata.get('source_file') == filter_source]
 
     # 4. Rerank documents locally (Contribution 5)
     docs = rerank_documents(docs, standalone_query)
