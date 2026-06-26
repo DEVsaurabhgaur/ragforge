@@ -53,6 +53,23 @@ def get_file_size_mb(file_path: str) -> float:
     return round(size_bytes / (1024 * 1024), 2)
 
 
+_STOPWORDS = frozenset([
+    "a", "an", "the", "and", "or", "but", "in", "on", "at", "to", "for",
+    "of", "with", "by", "from", "as", "is", "was", "are", "were", "be",
+    "been", "being", "have", "has", "had", "do", "does", "did", "will",
+    "would", "could", "should", "may", "might", "can", "not", "no",
+    "it", "its", "this", "that", "these", "those", "i", "me", "my",
+    "we", "our", "you", "your", "he", "she", "they", "them", "their",
+])
+
+
+def remove_stopwords(text: str) -> str:
+    """Remove common English stopwords from a text string, preserving word boundaries."""
+    words = re.findall(r'\b\w+\b', text)
+    filtered = [w for w in words if w.lower() not in _STOPWORDS]
+    return " ".join(filtered)
+
+
 def ensure_dirs():
     """Create required directories if they don't exist."""
     from config import CHROMA_DB_DIR, UPLOAD_DIR, SESSION_DIR
