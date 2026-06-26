@@ -494,6 +494,11 @@ with st.sidebar:
     )
 
     if uploaded_files:
+        # Guard: check document count limit
+        if len(uploaded_files) > config.MAX_DOCUMENTS:
+            st.warning(f"⚠️ You uploaded {len(uploaded_files)} files, but the limit is {config.MAX_DOCUMENTS} per session. Only the first {config.MAX_DOCUMENTS} will be ingested.")
+            uploaded_files = uploaded_files[:config.MAX_DOCUMENTS]
+
         if st.button("⚡ Ingest Documents", use_container_width=True, type="primary"):
             os.makedirs(config.UPLOAD_DIR, exist_ok=True)
             saved_paths = []
