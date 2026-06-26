@@ -476,12 +476,21 @@ with st.sidebar:
         )
 
         # Preset System Prompts
+        _PRESET_DESCRIPTIONS = {
+            "Strict Q&A": "🛡️ Refuses answers outside context",
+            "Detailed Explainer": "📚 Step-by-step with citations",
+            "Bullet Summary": "📃 Concise bullet points",
+            "Technical Analyst": "🔬 Precise figures & code references",
+            "ELI5 Explainer": "👶 Simple, beginner-friendly analogies",
+            "Custom": "✏️ Write your own instruction",
+        }
         selected_preset = st.selectbox(
             "System Prompt Preset",
             options=list(config.SYSTEM_PRESETS.keys()) + ["Custom"],
             index=0
         )
-        
+        st.caption(_PRESET_DESCRIPTIONS.get(selected_preset, ""))
+
         if selected_preset == "Custom":
             system_prompt = st.text_area("Custom System Prompt", value=config.DEFAULT_SYSTEM_PROMPT, height=120)
         else:
