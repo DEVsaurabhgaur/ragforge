@@ -70,23 +70,27 @@ def load_and_split_document(file_path: str, chunk_size: int = None, chunk_overla
     file_path_obj = Path(file_path)
     ext = file_path_obj.suffix.lower()
     
-    if ext == '.pdf':
-        loader = PyPDFLoader(file_path)
-        pages = loader.load()
-    elif ext in ['.txt', '.md']:
-        loader = TextLoader(file_path, encoding='utf-8')
-        pages = loader.load()
-        # Plain text files have no page numbers; assign 0
-        for p in pages:
-            p.metadata['page'] = 0
-    else:
-        # Fallback text loader
-        try:
+    try:
+        if ext == '.pdf':
+            loader = PyPDFLoader(file_path)
+            pages = loader.load()
+        elif ext in ['.txt', '.md']:
             loader = TextLoader(file_path, encoding='utf-8')
             pages = loader.load()
-        except Exception:
-            logging.error(f"Unsupported file format for: {file_path}")
-            return []
+            # Plain text files have no page numbers; assign 0
+            for p in pages:
+                p.metadata['page'] = 0
+        else:
+            # Fallback text loader
+            try:
+                loader = TextLoader(file_path, encoding='utf-8')
+                pages = loader.load()
+            except Exception:
+                logging.error(f"Unsupported file format for: {file_path}")
+                return []
+    except Exception as e:
+        logging.error(f"Failed to load or parse document {file_path}: {e}")
+        return []
 
     c_size = chunk_size or config.CHUNK_SIZE
     c_overlap = chunk_overlap or config.CHUNK_OVERLAP
