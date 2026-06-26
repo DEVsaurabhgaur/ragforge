@@ -19,6 +19,7 @@ from utils import clean_text, count_tokens, estimate_cost
 
 # Cache dictionary to prevent repeated database connections and file locks on Windows
 _VECTORSTORE_CACHE: dict = {}
+_RETRIEVER_CACHE: dict = {}
 
 # Precompiled regular expressions for optimization
 _RE_WORDS_GE3 = re.compile(r'\b\w{3,}\b')
@@ -28,6 +29,7 @@ _RE_LEADING_NUMBERS = re.compile(r'^\d+[\.\-\s]+')
 def clear_vectorstore_cache() -> None:
     """Clear the in-memory vectorstore cache to free references and allow re-initialization."""
     _VECTORSTORE_CACHE.clear()
+    _RETRIEVER_CACHE.clear()
 
 
 def get_embeddings():
@@ -277,7 +279,11 @@ STANDALONE QUESTION:"""
 
 
 def get_hybrid_retriever(vectorstore: Chroma, k: int = 4) -> Any:
-    """Create a hybrid retriever using BM25 and Chroma semantic search."""
+    """Create a hybrid retriever using BM25 and Chroma semantic search, with caching."""
+    cache_key = (id(vectorstore), k)
+    if cache_key in _RETRIEVER_CACHE:
+        return _RETRIEVER_CACHE[cache_key]
+
     chroma_retriever = vectorstore.as_retriever(
         search_type='similarity',
         search_kwargs={'k': k}
@@ -287,10 +293,10 @@ def get_hybrid_retriever(vectorstore: Chroma, k: int = 4) -> Any:
         # Load all documents from vectorstore to train BM25 retriever
         data = vectorstore.get()
         documents = []
-        if data and 'documents' in data and data['documents']:
-            for text, meta in zip(data['documents'], data['metadatas']):
+        if data and "documents" in data and data["documents"]:
+            for text, meta in zip(data["documents"], data["metadatas"]):
                 documents.append(Document(page_content=text, metadata=meta or {}))
-
+        
         if documents:
             bm25_retriever = BM25Retriever.from_documents(documents)
             bm25_retriever.k = k
@@ -299,10 +305,12 @@ def get_hybrid_retriever(vectorstore: Chroma, k: int = 4) -> Any:
                 retrievers=[chroma_retriever, bm25_retriever],
                 weights=[0.5, 0.5]
             )
+            _RETRIEVER_CACHE[cache_key] = ensemble_retriever
             return ensemble_retriever
     except Exception as e:
         logging.warning(f"Could not initialize BM25 retriever: {e}. Falling back to semantic search.")
     
+    _RETRIEVER_CACHE[cache_key] = chroma_retriever
     return chroma_retriever
 
 
