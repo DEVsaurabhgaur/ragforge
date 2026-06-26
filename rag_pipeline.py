@@ -18,7 +18,12 @@ import config
 from utils import clean_text, count_tokens, estimate_cost
 
 # Cache dictionary to prevent repeated database connections and file locks on Windows
-_VECTORSTORE_CACHE = {}
+_VECTORSTORE_CACHE: dict = {}
+
+
+def clear_vectorstore_cache() -> None:
+    """Clear the in-memory vectorstore cache to free references and allow re-initialization."""
+    _VECTORSTORE_CACHE.clear()
 
 
 def get_embeddings():
@@ -273,13 +278,22 @@ def get_hybrid_retriever(vectorstore: Chroma, k: int = 4) -> Any:
 
 
 def validate_context_constraints(answer: str) -> bool:
-    """Verify if the generated response claims that context was insufficient."""
+    """Verify if the generated response claims that context was insufficient.
+
+    Returns True if the answer appears valid/grounded, False if it signals
+    that no relevant information was found in the context.
+    """
     refusal_phrases = [
         "could not find this",
         "not in the provided context",
         "not mentioned in the context",
         "insufficient information",
-        "no information provided"
+        "no information provided",
+        "the context does not contain",
+        "not available in the context",
+        "cannot find this information",
+        "no relevant information",
+        "outside the scope of the documents",
     ]
     answer_lower = answer.lower()
     return not any(phrase in answer_lower for phrase in refusal_phrases)

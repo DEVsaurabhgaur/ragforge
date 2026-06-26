@@ -59,95 +59,275 @@ def log_diagnostic(msg: str):
 # ── Custom CSS for Rich Aesthetics ─────────────────────────────
 st.markdown("""
 <style>
+    /* Import Google Fonts - Inter */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    /* Global font override */
+    html, body, [class*="css"] {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    }
+
     /* Dark aesthetic overrides */
     .stApp {
         background-color: #0d0e15;
         color: #f1f5f9;
     }
-    
+
     /* Sidebar styling */
     section[data-testid="stSidebar"] {
         background-color: #11131f !important;
         border-right: 1px solid #1f2937;
     }
 
-    /* Cards and boxes */
+    /* ── Gradient Hero Header ── */
+    .hero-header {
+        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #0d0e15 60%, #0f172a 100%);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+        animation: pulse-bg 6s ease-in-out infinite alternate;
+        pointer-events: none;
+    }
+    @keyframes pulse-bg {
+        0%   { opacity: 0.4; transform: scale(1); }
+        100% { opacity: 1;   transform: scale(1.1); }
+    }
+    .hero-title {
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #818cf8, #c7d2fe, #6366f1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+        color: #94a3b8;
+        margin: 0;
+        font-weight: 400;
+    }
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(99, 102, 241, 0.12);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        color: #a5b4fc;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-top: 14px;
+        letter-spacing: 0.3px;
+    }
+    .hero-badge .dot {
+        width: 6px;
+        height: 6px;
+        background: #6366f1;
+        border-radius: 50%;
+        animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+    }
+    @keyframes ping {
+        0%   { transform: scale(1); opacity: 1; }
+        75%, 100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* ── Cards and boxes ── */
     .source-card {
-        background: #161a29;
+        background: linear-gradient(135deg, #161a29 0%, #1a1f32 100%);
         border-left: 4px solid #6366f1;
-        padding: 12px 16px;
-        border-radius: 8px;
+        padding: 14px 18px;
+        border-radius: 10px;
         margin-bottom: 12px;
         font-size: 0.88rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid rgba(99, 102, 241, 0.12);
+        border-left: 4px solid #6366f1;
     }
-    
+    .source-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+    }
+
     .badge {
         background: rgba(99, 102, 241, 0.15);
         color: #818cf8;
-        padding: 2px 8px;
+        padding: 3px 10px;
         border-radius: 12px;
         font-size: 0.78rem;
         font-weight: 600;
         border: 1px solid rgba(99, 102, 241, 0.3);
+        letter-spacing: 0.3px;
     }
-    
+
+    /* ── Stats Cards with glassmorphism ── */
     .stats-card {
-        background: #161a29;
-        padding: 14px;
-        border-radius: 8px;
-        border: 1px solid #1f2937;
+        background: linear-gradient(135deg, rgba(22, 26, 41, 0.9) 0%, rgba(26, 31, 50, 0.9) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(99, 102, 241, 0.15);
         margin-bottom: 10px;
+        transition: border-color 0.2s ease;
     }
-    
+    .stats-card:hover {
+        border-color: rgba(99, 102, 241, 0.35);
+    }
+    .stats-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #64748b;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
     .stats-val {
-        font-size: 1.4rem;
-        font-weight: bold;
+        font-size: 1.6rem;
+        font-weight: 700;
         color: #818cf8;
+        line-height: 1;
     }
-    
+
     .metric-badge {
         display: inline-block;
         background: rgba(16, 185, 129, 0.1);
         color: #10b981;
         border: 1px solid rgba(16, 185, 129, 0.2);
         font-size: 0.75rem;
-        padding: 1px 6px;
+        padding: 2px 8px;
         border-radius: 4px;
         margin-right: 6px;
+        font-weight: 500;
     }
-    
+
     .metric-cost {
         display: inline-block;
         background: rgba(245, 158, 11, 0.1);
         color: #f59e0b;
         border: 1px solid rgba(245, 158, 11, 0.2);
         font-size: 0.75rem;
-        padding: 1px 6px;
+        padding: 2px 8px;
         border-radius: 4px;
-    }
-    
-    /* Logs styling */
-    .logs-box {
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 0.82rem;
-        background-color: #05070f;
-        color: #38bdf8;
-        padding: 10px;
-        border-radius: 6px;
-        max-height: 200px;
-        overflow-y: auto;
-        border: 1px solid #1e293b;
+        font-weight: 500;
     }
 
-    /* Buttons */
-    .stButton>button {
-        transition: all 0.2s ease-in-out;
-        border-radius: 6px;
+    /* ── Logs styling ── */
+    .logs-box {
+        font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        font-size: 0.80rem;
+        background: linear-gradient(180deg, #05070f 0%, #080a14 100%);
+        color: #38bdf8;
+        padding: 12px 14px;
+        border-radius: 8px;
+        max-height: 220px;
+        overflow-y: auto;
+        border: 1px solid #1e293b;
+        line-height: 1.6;
     }
-    .stButton>button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    .logs-box::-webkit-scrollbar {
+        width: 5px;
+    }
+    .logs-box::-webkit-scrollbar-track {
+        background: #0d0e15;
+    }
+    .logs-box::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+    }
+    .logs-box::-webkit-scrollbar-thumb:hover {
+        background: #6366f1;
+    }
+
+    /* ── Chat message fade-in animation ── */
+    [data-testid="stChatMessage"] {
+        animation: fadeSlideIn 0.3s ease-out;
+    }
+    @keyframes fadeSlideIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Buttons ── */
+    .stButton > button {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 8px;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+    }
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+    }
+    .stButton > button:active {
+        transform: translateY(0);
+    }
+
+    /* ── Progress bar color ── */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #6366f1, #818cf8);
+        border-radius: 4px;
+    }
+
+    /* ── Custom scrollbar for main area ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0d0e15; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+    /* ── Spinner color override ── */
+    .stSpinner > div {
+        border-top-color: #6366f1 !important;
+    }
+
+    /* ── Info/warning/success alert tweaks ── */
+    .stAlert {
+        border-radius: 10px !important;
+        border-left-width: 4px !important;
+    }
+
+    /* ── Expander styling ── */
+    .streamlit-expanderHeader {
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* ── Upload area hover effect ── */
+    [data-testid="stFileUploadDropzone"]:hover {
+        border-color: #6366f1 !important;
+        background: rgba(99, 102, 241, 0.04) !important;
+    }
+
+    /* ── Selectbox and slider accent ── */
+    [data-testid="stSelectbox"] > div:first-child {
+        border-radius: 8px !important;
+    }
+
+    /* ── Chat input focus ── */
+    [data-testid="stChatInput"] textarea:focus {
+        border-color: #6366f1 !important;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
+    }
+
+    /* ── Divider style ── */
+    hr {
+        border-color: #1e293b !important;
+        margin: 12px 0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -214,10 +394,16 @@ def load_session(filename: str):
             log_diagnostic(f"Error loading session: {e}")
 
 
-# ── Sidebar Configurations & Dashboards ────────────────────────
+# ── Sidebar Configurations & Dashboards ────────────────
 with st.sidebar:
-    st.markdown("## 🔍 RAGForge")
-    st.caption("Intelligent Multi-Document Q&A System")
+    st.markdown("""
+    <div style="text-align:center; padding: 12px 0 8px;">
+        <div style="font-size:2rem;">🔍</div>
+        <div style="font-size:1.2rem; font-weight:800; background:linear-gradient(90deg,#818cf8,#c7d2fe); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:-0.3px;">RAGForge</div>
+        <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">Intelligent Multi-Document Q&A</div>
+        <div style="display:inline-block; background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.3); color:#818cf8; font-size:0.68rem; padding:2px 10px; border-radius:20px; margin-top:8px; font-weight:600;">v2.1</div>
+    </div>
+    """, unsafe_allow_html=True)
     st.divider()
 
     # ── Parameters section ──
@@ -413,20 +599,35 @@ with st.sidebar:
             else:
                 st.markdown(f"📄 `{name}`")
 
-    # ── Statistics Dashboard Panel (Contribution 13) ──
+    # ── Statistics Dashboard Panel ──
     if st.session_state["doc_stats"]:
         st.divider()
-        st.markdown("**📊 Statistics Dashboard**")
+        st.markdown("**📊 Statistics**")
         stats = st.session_state["doc_stats"]
-        
+
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown(f'<div class="stats-card">Files<br><span class="stats-val">{stats["total_files"]}</span></div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="stats-card">'
+                f'<div class="stats-label">Files</div>'
+                f'<div class="stats-val">{stats["total_files"]}</div>'
+                f'</div>', unsafe_allow_html=True
+            )
         with col2:
-            st.markdown(f'<div class="stats-card">Chunks<br><span class="stats-val">{stats["total_chunks"]}</span></div>', unsafe_allow_html=True)
-        
-        st.markdown(f'<div class="stats-card" style="text-align: center;">Average Chunk Size<br><span class="stats-val">{stats["avg_chunk_size"]} chars</span></div>', unsafe_allow_html=True)
-        st.caption(f"Last ingestion: {stats['ingested_at']}")
+            st.markdown(
+                f'<div class="stats-card">'
+                f'<div class="stats-label">Chunks</div>'
+                f'<div class="stats-val">{stats["total_chunks"]}</div>'
+                f'</div>', unsafe_allow_html=True
+            )
+
+        st.markdown(
+            f'<div class="stats-card" style="text-align:center;">'
+            f'<div class="stats-label">Avg Chunk Size</div>'
+            f'<div class="stats-val">{stats["avg_chunk_size"]} <span style="font-size:0.9rem;color:#64748b;">chars</span></div>'
+            f'</div>', unsafe_allow_html=True
+        )
+        st.caption(f"⏰ Last ingested: {stats['ingested_at']}")
 
     # ── Load Session / History Panel (Contribution 14) ──
     sessions = get_saved_sessions()
@@ -488,17 +689,37 @@ with st.sidebar:
             st.rerun()
 
     st.divider()
-    st.caption("RAGForge v2.0 • Built by [Saurabh Gaur](https://github.com/DEVsaurabhgaur)")
+    # Show message count if conversation is active
+    if st.session_state.messages:
+        msg_count = len(st.session_state.messages)
+        user_msgs = sum(1 for m in st.session_state.messages if m["role"] == "user")
+        st.markdown(
+            f'<div style="text-align:center; font-size:0.75rem; color:#64748b; margin-bottom:6px;">'
+            f'💬 {user_msgs} question{"s" if user_msgs != 1 else ""} · {msg_count} messages'
+            f'</div>', unsafe_allow_html=True
+        )
+    st.caption("RAGForge v2.1 • Built by [Saurabh Gaur](https://github.com/DEVsaurabhgaur)")
 
-# ── Main Area ──────────────────────────────────────────────────
-st.title("🔍 Chat with Your Documents")
+# ── Main Area ──────────────────────────────────────────────
+# ── Hero Header ──
+docs_ready = "vectorstore" in st.session_state
+status_text_hero = "Documents loaded — ask anything below" if docs_ready else "Upload documents to begin"
+status_dot = '<span class="dot"></span>' if docs_ready else ''
+st.markdown(
+    f'<div class="hero-header">'
+    f'<p class="hero-title">🔍 Chat with Your Documents</p>'
+    f'<p class="hero-subtitle">Grounded answers with source citations, powered by RAG + LLMs</p>'
+    f'<div class="hero-badge">{status_dot} {status_text_hero}</div>'
+    f'</div>',
+    unsafe_allow_html=True
+)
 
 # Welcome/Guide Box
-if "vectorstore" not in st.session_state:
-    st.info("👈 Upload your documents (PDF, TXT, MD) and click **Ingest Documents** to begin.")
+if not docs_ready:
+    st.info("👈 Upload your documents (PDF, TXT, MD) in the sidebar and click **Ingest Documents** to begin.")
 else:
     if not st.session_state.messages:
-        st.success("✅ Documents ready. Ask a question below to start the retrieval conversation.")
+        st.success("✅ Documents ready. Ask your first question below to start the retrieval conversation.")
 
 # Export Current Conversation (Contribution 15)
 if st.session_state.messages:

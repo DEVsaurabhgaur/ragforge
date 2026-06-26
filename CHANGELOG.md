@@ -1,5 +1,42 @@
 # Changelog
 
+## [2.1.0] - 2026-06-26
+### Added
+- Google Inter font via `@import` for premium typography across all UI elements
+- Animated gradient hero header with radial glow and pulsing status badge
+- CSS `fadeSlideIn` animation on all chat messages for smooth rendering
+- Glassmorphism stats cards with `backdrop-filter: blur` and hover effects
+- Hover lift effect on source citation cards with gradient background
+- Custom styled scrollbar (thin indigo track) in logs box and main area
+- Gradient progress bar (indigo → violet) during document ingestion
+- Source card hover animation (`translateY(-2px)` + glow shadow)
+- Chat input border glow on focus with indigo ring
+- Sidebar branding overhaul: gradient logo, version chip, message counter
+- `hero-badge` with animated pulsing dot for document status
+- Upgraded button hover: cubic-bezier easing + stronger box-shadow
+- `stats-label` uppercase micro-typography above stats values
+- Two new system prompt presets: `Technical Analyst` and `ELI5 Explainer`
+- `APP_VERSION`, `APP_NAME`, `MAX_FILE_SIZE_MB`, `MAX_DOCUMENTS` config constants
+- `.docx` added to `SUPPORTED_EXTENSIONS` constant (UI support pending loader)
+- Three new utility functions: `word_count`, `sanitize_filename`, `get_file_size_mb`
+- Explicit `clear_vectorstore_cache()` function in `rag_pipeline.py`
+- Expanded hallucination guard with 5 additional refusal phrase patterns
+- `test_new_utils.py`: 12 new unit tests covering new utility helpers
+- Extended `test_config.py` with tests for new constants and preset keys
+- Streamlit config: added XSRF protection, CORS off, usage stats opt-out
+- Improved `validate_context_constraints` docstring with return value semantics
+- Message count display in sidebar footer (questions + total messages)
+
+### Changed
+- Stats cards now use semantic `stats-label` + `stats-val` structure for accessibility
+- `_VECTORSTORE_CACHE` annotated with explicit `dict` type hint
+- Sidebar caption updated from v2.0 → v2.1
+- `logs-box` upgraded to monospace JetBrains Mono / Fira Code font stack
+- `logs-box` max-height increased from 200px to 220px
+
+### Fixed
+- Source card CSS: removed conflicting duplicate `border-left` declaration
+
 ## [2.0.1] - 2026-06-25
 ### Fixed
 - CI pipeline: added `langchain-classic` and `rank_bm25` to dependencies

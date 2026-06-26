@@ -1,5 +1,5 @@
 """
-utils.py â€” Helper functions for RAGForge
+utils.py — Helper functions for RAGForge
 """
 import re
 import os
@@ -25,7 +25,7 @@ def get_pdf_files_in_dir(directory: str) -> list:
 
 def format_source_display(source_file: str, page: int | str) -> str:
     """Format a source reference for display."""
-    return f"{source_file} â€” Page {page}"
+    return f"{source_file} — Page {page}"
 
 
 def truncate_text(text: str, max_chars: int = 300) -> str:
@@ -33,6 +33,24 @@ def truncate_text(text: str, max_chars: int = 300) -> str:
     if len(text) <= max_chars:
         return text
     return text[:max_chars].rsplit(' ', 1)[0] + '...'
+
+
+def word_count(text: str) -> int:
+    """Count the number of words in a string."""
+    return len(re.findall(r'\b\w+\b', text))
+
+
+def sanitize_filename(name: str) -> str:
+    """Sanitize a string to be safe for use as a filename."""
+    safe = re.sub(r'[^\w\s\-.]', '', name).strip()
+    safe = re.sub(r'[\s]+', '_', safe)
+    return safe[:100]  # Truncate to 100 chars max
+
+
+def get_file_size_mb(file_path: str) -> float:
+    """Return the size of a file in megabytes, rounded to 2 decimal places."""
+    size_bytes = os.path.getsize(file_path)
+    return round(size_bytes / (1024 * 1024), 2)
 
 
 def ensure_dirs():
