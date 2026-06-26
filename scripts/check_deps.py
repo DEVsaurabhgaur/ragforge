@@ -2,6 +2,10 @@
 scripts/check_deps.py — Verify that all required Python packages are installed.
 Usage: python scripts/check_deps.py
 """
+import sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 REQUIRED = [
     "streamlit", "langchain", "langchain_community", "langchain_classic",
     "langchain_google_genai", "langchain_openai", "chromadb",

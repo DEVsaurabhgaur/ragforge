@@ -5,6 +5,9 @@ Usage: python scripts/validate_env.py
 import os
 import sys
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from dotenv import load_dotenv
 load_dotenv()
@@ -14,13 +17,18 @@ import config
 errors = []
 warnings = []
 
+is_ci = os.getenv("CI", "false").lower() == "true"
+
 def is_placeholder(key: str) -> bool:
     return any(p in key.lower() for p in ["your-", "your_", "api_key_here", "placeholder", "todo"])
 
 # ── API Key checks ─────────────────────────────────────────────────────────
 if config.LLM_PROVIDER == "openai":
     if not config.OPENAI_API_KEY:
-        errors.append("OPENAI_API_KEY is not set but LLM_PROVIDER=openai")
+        if is_ci:
+            warnings.append("OPENAI_API_KEY is not set (ignored on CI)")
+        else:
+            errors.append("OPENAI_API_KEY is not set but LLM_PROVIDER=openai")
     elif is_placeholder(config.OPENAI_API_KEY):
         errors.append("OPENAI_API_KEY appears to be a placeholder value")
     elif not config.OPENAI_API_KEY.startswith("sk-"):
@@ -28,13 +36,19 @@ if config.LLM_PROVIDER == "openai":
 
 if config.LLM_PROVIDER == "gemini":
     if not config.GEMINI_API_KEY:
-        errors.append("GEMINI_API_KEY is not set but LLM_PROVIDER=gemini")
+        if is_ci:
+            warnings.append("GEMINI_API_KEY is not set (ignored on CI)")
+        else:
+            errors.append("GEMINI_API_KEY is not set but LLM_PROVIDER=gemini")
     elif is_placeholder(config.GEMINI_API_KEY):
         errors.append("GEMINI_API_KEY appears to be a placeholder value")
 
 if config.EMBEDDING_PROVIDER == "openai":
     if not config.OPENAI_API_KEY:
-        errors.append("OPENAI_API_KEY is not set but EMBEDDING_PROVIDER=openai")
+        if is_ci:
+            warnings.append("OPENAI_API_KEY is not set (ignored on CI)")
+        else:
+            errors.append("OPENAI_API_KEY is not set but EMBEDDING_PROVIDER=openai")
     elif is_placeholder(config.OPENAI_API_KEY):
         errors.append("OPENAI_API_KEY appears to be a placeholder value")
 
