@@ -166,3 +166,19 @@ def test_estimate_cost_specific_models():
     cost_flash = estimate_cost(1000, 500, provider="gemini", model="gemini-2.5-flash")
     cost_gem_pro = estimate_cost(1000, 500, provider="gemini", model="gemini-2.5-pro")
     assert cost_gem_pro > cost_flash
+
+
+def test_format_source_display_edge_cases():
+    from utils import format_source_display
+    assert format_source_display("doc.txt", None) == "doc.txt — Page N/A"
+    assert format_source_display("doc.txt", "") == "doc.txt — Page N/A"
+    assert format_source_display("doc.txt", "   ") == "doc.txt — Page N/A"
+
+
+def test_clean_text_edge_cases():
+    from utils import clean_text
+    assert clean_text("") == ""
+    # Only non-printable chars should yield empty string
+    assert clean_text("\x01\x02\x03") == ""
+    # Collapse multiple consecutive blank lines
+    assert clean_text("line1\n\n\n\nline2") == "line1\n\nline2"
