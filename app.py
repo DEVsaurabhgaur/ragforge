@@ -799,6 +799,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# API Key warnings in main area
+if llm_provider == "gemini" and not config.GEMINI_API_KEY:
+    st.warning("⚠️ **GEMINI_API_KEY is missing!** Generative answers will fail. Please add your key to `.env` or set it in your environment.")
+elif llm_provider == "openai" and not config.OPENAI_API_KEY:
+    st.warning("⚠️ **OPENAI_API_KEY is missing!** Generative answers will fail. Please add your key to `.env` or set it in your environment.")
+
 # Welcome/Guide Box
 if not docs_ready:
     st.info("👈 Upload your documents (PDF, TXT, MD) in the sidebar and click **Ingest Documents** to begin.")
