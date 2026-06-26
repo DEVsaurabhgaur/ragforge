@@ -527,7 +527,7 @@ if st.session_state.messages:
     json_data = json.dumps(st.session_state.messages, indent=4)
     with col_exp2:
         st.download_button(
-            label="json Export as JSON",
+            label="📋 Export as JSON",
             data=json_data,
             file_name=f"chat_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
             mime="application/json",
