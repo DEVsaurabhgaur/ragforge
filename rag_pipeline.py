@@ -362,6 +362,8 @@ def query_rag(
     Execute conversational RAG query pipeline.
     Returns dictionary with response text, retrieved source docs, and token/cost metrics.
     """
+    import time
+    start_time = time.perf_counter()
     llm = get_llm(temperature=temperature)
     
     # 1. Reformulate question using conversational history (Contribution 7)
@@ -399,6 +401,9 @@ def query_rag(
 
     # 4. Rerank documents locally (Contribution 5)
     docs = rerank_documents(docs, standalone_query)
+
+    retrieval_time = time.perf_counter() - start_time
+    llm_start_time = time.perf_counter()
 
     if not docs:
         return {
@@ -443,13 +448,19 @@ Provide a clear, concise answer. At the end, list the exact sources (file name +
     output_tokens = count_tokens(answer, model_name=model_name)
     cost = estimate_cost(input_tokens, output_tokens, provider=config.LLM_PROVIDER)
 
+    generation_time = time.perf_counter() - llm_start_time
+    total_time = time.perf_counter() - start_time
+
     return {
         'answer': answer,
         'sources': docs,
         'metrics': {
             'input_tokens': input_tokens,
             'output_tokens': output_tokens,
-            'cost': cost
+            'cost': cost,
+            'retrieval_time': round(retrieval_time, 2),
+            'generation_time': round(generation_time, 2),
+            'total_time': round(total_time, 2)
         }
     }
 

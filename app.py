@@ -906,9 +906,11 @@ if question := st.chat_input("Ask a question about your documents..."):
                     st.markdown(answer)
                     
                     # Display metrics immediately (Contribution 16)
+                    ret_t = metrics.get("retrieval_time", 0.0)
+                    gen_t = metrics.get("generation_time", 0.0)
                     st.markdown(
                         f'<div style="margin-top: -6px; margin-bottom: 8px;">'
-                        f'<span class="metric-badge">⚡ In: {metrics.get("input_tokens", 0)} | Out: {metrics.get("output_tokens", 0)} tokens</span>'
+                        f'<span class="metric-badge">⚡ In: {metrics.get("input_tokens", 0)} | Out: {metrics.get("output_tokens", 0)} tokens ({ret_t}s retrieve · {gen_t}s generate)</span>'
                         f'<span class="metric-cost">💰 Cost: ${metrics.get("cost", 0.0):.6f}</span>'
                         f'</div>',
                         unsafe_allow_html=True
