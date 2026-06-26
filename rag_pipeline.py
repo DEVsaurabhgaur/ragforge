@@ -218,6 +218,8 @@ def rerank_documents(docs: List[Document], query: str) -> List[Document]:
 
 def expand_query(query: str, llm) -> List[str]:
     """Generate search query variations using the LLM to improve retrieval coverage."""
+    if not query or not query.strip():
+        return []
     prompt = f"""You are a search expert. Generate exactly 2 alternative search queries (variations) for the user's question to retrieve better document contexts.
 Write only the queries, one per line. Do not write any explanations, numbers, or bullet points.
 
@@ -239,6 +241,8 @@ QUESTION: {query}
 
 def reformulate_question(question: str, chat_history: List[Dict[str, Any]], llm) -> str:
     """Reformulate follow-up query to incorporate conversational context from chat history."""
+    if not question or not question.strip():
+        return question
     if not chat_history:
         return question
 
