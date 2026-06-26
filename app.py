@@ -610,16 +610,25 @@ with st.sidebar:
         st.divider()
         st.markdown("**📂 Document Context:**")
         for name in st.session_state["doc_names"]:
-            # Download file support (Contribution 19)
+            # Download file support
             file_path = os.path.join(config.UPLOAD_DIR, name)
             if os.path.exists(file_path):
-                with open(file_path, "rb") as f:
-                    st.download_button(
-                        label=f"📄 Download `{name}`",
-                        data=f.read(),
-                        file_name=name,
-                        key=f"dl_{name}",
-                        use_container_width=True
+                # Show file size alongside download button
+                fsize_mb = os.path.getsize(file_path) / (1024 * 1024)
+                col_dl, col_sz = st.columns([3, 1])
+                with col_dl:
+                    with open(file_path, "rb") as f:
+                        st.download_button(
+                            label=f"📄 {name}",
+                            data=f.read(),
+                            file_name=name,
+                            key=f"dl_{name}",
+                            use_container_width=True
+                        )
+                with col_sz:
+                    st.markdown(
+                        f'<div style="font-size:0.7rem;color:#64748b;padding-top:10px;">{fsize_mb:.2f}MB</div>',
+                        unsafe_allow_html=True
                     )
             else:
                 st.markdown(f"📄 `{name}`")
