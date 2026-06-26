@@ -87,12 +87,65 @@ def print_vectorstore_stats():
     print()
 
 
+def get_stats_json() -> dict:
+    """Gather all statistics into a single dictionary."""
+    upload_dir = Path(config.UPLOAD_DIR)
+    files = list(upload_dir.glob("*")) if upload_dir.exists() else []
+    total_upload_size = sum(f.stat().st_size for f in files if f.is_file())
+    uploaded_docs = [{"name": f.name, "size_bytes": f.stat().st_size} for f in files if f.is_file()]
+
+    session_dir = Path(config.SESSION_DIR)
+    sessions = list(session_dir.glob("*.json")) if session_dir.exists() else []
+    session_list = []
+    for s in sessions:
+        try:
+            with open(s, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            session_list.append({
+                "name": s.name,
+                "messages": len(data.get("messages", [])),
+                "docs": len(data.get("doc_names", [])),
+                "timestamp": data.get("timestamp", "unknown")
+            })
+        except Exception:
+            session_list.append({"name": s.name, "status": "unreadable"})
+
+    db_dir = Path(config.CHROMA_DB_DIR)
+    vs_exists = db_dir.exists() and any(db_dir.iterdir())
+    vs_size_bytes = sum(f.stat().st_size for f in db_dir.rglob("*") if f.is_file()) if vs_exists else 0
+    vs_files = sum(1 for f in db_dir.rglob("*") if f.is_file()) if vs_exists else 0
+
+    return {
+        "app_version": config.APP_VERSION,
+        "uploads": {
+            "dir": config.UPLOAD_DIR,
+            "file_count": len(uploaded_docs),
+            "total_size_bytes": total_upload_size,
+            "files": uploaded_docs
+        },
+        "sessions": {
+            "dir": config.SESSION_DIR,
+            "session_count": len(session_list),
+            "list": session_list
+        },
+        "vectorstore": {
+            "dir": config.CHROMA_DB_DIR,
+            "exists": vs_exists,
+            "size_bytes": vs_size_bytes,
+            "file_count": vs_files
+        }
+    }
+
+
 if __name__ == "__main__":
-    print()
-    print(f"  🔍 RAGForge {config.APP_VERSION} — Statistics Report")
-    print()
-    print_upload_stats()
-    print_session_stats()
-    print_vectorstore_stats()
-    print(hr("═"))
-    print()
+    if "--json" in sys.argv:
+        print(json.dumps(get_stats_json(), indent=2))
+    else:
+        print()
+        print(f"  🔍 RAGForge {config.APP_VERSION} — Statistics Report")
+        print()
+        print_upload_stats()
+        print_session_stats()
+        print_vectorstore_stats()
+        print(hr("═"))
+        print()
