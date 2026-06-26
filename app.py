@@ -897,12 +897,27 @@ if question := st.chat_input("Ask a question about your documents..."):
                     })
                     log_diagnostic(f"Query generation crashed: {e}")
 
-# ── Diagnostic Log View at bottom of application (Contribution 22) ──
+# ── Diagnostic Log View at bottom of application ──
 st.divider()
-with st.expander("🛠️ Diagnostics & Pipeline Log Console", expanded=False):
+log_count = len(st.session_state["logs"])
+with st.expander(f"🛠️ Diagnostics & Pipeline Log Console ({log_count} events)", expanded=False):
     if st.session_state["logs"]:
+        # Action row: clear + download
+        dcol1, dcol2, _ = st.columns([1, 1.5, 5])
+        with dcol1:
+            if st.button("🗑️ Clear Logs", key="clear_logs_btn"):
+                st.session_state["logs"] = []
+                st.rerun()
+        with dcol2:
+            logs_plain = "\n".join(st.session_state["logs"])
+            st.download_button(
+                label="⬇️ Download Logs",
+                data=logs_plain,
+                file_name=f"ragforge_logs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                mime="text/plain",
+                key="dl_logs_btn"
+            )
         logs_html = "<br>".join(st.session_state["logs"])
         st.markdown(f'<div class="logs-box">{logs_html}</div>', unsafe_allow_html=True)
     else:
         st.caption("No logs recorded yet.")
-
