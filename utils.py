@@ -76,7 +76,7 @@ def is_valid_collection_name(name: str) -> bool:
     Rules:
     - Must be 3-63 characters
     - Must start and end with an alphanumeric character
-    - May only contain alphanumeric characters, underscores, or hyphens
+    - May only contain alphanumeric characters, underscores, hyphens, or periods
     - Must not contain consecutive periods
     - Must not be a valid IPv4 address
 
@@ -87,7 +87,11 @@ def is_valid_collection_name(name: str) -> bool:
         return False
     if not re.match(r'^[a-zA-Z0-9].*[a-zA-Z0-9]$', name):
         return False
-    if not re.match(r'^[a-zA-Z0-9_-]+$', name):
+    if not re.match(r'^[a-zA-Z0-9_\-.]+$', name):
+        return False
+    if '..' in name:
+        return False
+    if re.match(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$', name):
         return False
     return True
 
