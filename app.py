@@ -666,6 +666,13 @@ with st.sidebar:
             st.success("Session saved successfully!")
             st.rerun()
 
+        # Clear chat history button
+        if st.button("🚫 Clear Chat History", use_container_width=True):
+            st.session_state.messages = []
+            st.session_state["current_session_file"] = ""
+            log_diagnostic("Chat history cleared by user.")
+            st.rerun()
+
     # ── Reset UI ──
     if "vectorstore" in st.session_state:
         st.divider()
