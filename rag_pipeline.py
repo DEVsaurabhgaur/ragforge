@@ -319,9 +319,15 @@ def validate_context_constraints(answer: str) -> bool:
         "cannot find this information",
         "no relevant information",
         "outside the scope of the documents",
+        "not found in the uploaded documents",
+        "no information in the context",
+        "not mentioned in the provided documents",
+        "does not mention anything",
+        "no information is available",
     ]
-    answer_lower = answer.lower()
-    return not any(phrase in answer_lower for phrase in refusal_phrases)
+    # Clean answer: normalize spaces and convert to lowercase
+    answer_clean = " ".join(answer.lower().split())
+    return not any(phrase in answer_clean for phrase in refusal_phrases)
 
 
 def query_rag(
