@@ -144,14 +144,31 @@ def count_tokens(text: str, model_name: str = 'gpt-4o-mini') -> int:
         return max(1, len(text) // 4)
 
 
-def estimate_cost(input_tokens: int, output_tokens: int, provider: str = 'openai') -> float:
-    """Estimate cost in USD based on input/output token counts."""
-    if provider.lower() == 'openai':
-        # gpt-4o-mini pricing: $0.15 / 1M input tokens, $0.60 / 1M output tokens
-        return (input_tokens * 0.15 + output_tokens * 0.60) / 1_000_000
-    else:
-        # gemini-2.5-flash: $0.075 / 1M input tokens, $0.30 / 1M output tokens
-        return (input_tokens * 0.075 + output_tokens * 0.30) / 1_000_000
+def estimate_cost(input_tokens: int, output_tokens: int, provider: str = 'openai', model: str = '') -> float:
+    """Estimate cost in USD based on input/output token counts and specific model pricing."""
+    p_lower = provider.lower()
+    m_lower = model.lower()
+
+    if p_lower == 'openai':
+        if 'gpt-4o-mini' in m_lower or not model:
+            # gpt-4o-mini pricing: $0.15 / 1M input, $0.60 / 1M output tokens
+            return (input_tokens * 0.15 + output_tokens * 0.60) / 1_000_000
+        elif 'gpt-4o' in m_lower:
+            # gpt-4o pricing: $2.50 / 1M input, $10.00 / 1M output tokens
+            return (input_tokens * 2.50 + output_tokens * 10.00) / 1_000_000
+        else:
+            # fallback generic openai pricing
+            return (input_tokens * 0.15 + output_tokens * 0.60) / 1_000_000
+    else:  # gemini / other
+        if 'gemini-2.5-flash' in m_lower or not model:
+            # gemini-2.5-flash: $0.075 / 1M input, $0.30 / 1M output tokens
+            return (input_tokens * 0.075 + output_tokens * 0.30) / 1_000_000
+        elif 'gemini-2.5-pro' in m_lower:
+            # gemini-2.5-pro: $1.25 / 1M input, $5.00 / 1M output tokens
+            return (input_tokens * 1.25 + output_tokens * 5.00) / 1_000_000
+        else:
+            # fallback gemini/generic pricing
+            return (input_tokens * 0.075 + output_tokens * 0.30) / 1_000_000
 
 
 def highlight_keywords(text: str, query: str) -> str:

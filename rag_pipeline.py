@@ -446,7 +446,7 @@ Provide a clear, concise answer. At the end, list the exact sources (file name +
     model_name = config.LLM_MODEL_OPENAI if config.LLM_PROVIDER == 'openai' else config.LLM_MODEL_GEMINI
     input_tokens = count_tokens(prompt, model_name=model_name)
     output_tokens = count_tokens(answer, model_name=model_name)
-    cost = estimate_cost(input_tokens, output_tokens, provider=config.LLM_PROVIDER)
+    cost = estimate_cost(input_tokens, output_tokens, provider=config.LLM_PROVIDER, model=model_name)
 
     generation_time = time.perf_counter() - llm_start_time
     total_time = time.perf_counter() - start_time
