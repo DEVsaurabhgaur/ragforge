@@ -422,6 +422,10 @@ with st.sidebar:
         elif llm_provider == "openai" and not config.OPENAI_API_KEY:
             st.warning("⚠️ OPENAI_API_KEY is not set in .env")
 
+        # Show active model
+        active_model = config.LLM_MODEL_GEMINI if llm_provider == "gemini" else config.LLM_MODEL_OPENAI
+        st.caption(f"🧠 Model: `{active_model}`")
+
         # Dynamic retrieval mode
         retrieval_mode = st.selectbox(
             "Retrieval Mode",
