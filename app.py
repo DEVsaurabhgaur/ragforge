@@ -490,7 +490,7 @@ with st.sidebar:
         "Upload Documents",
         type=[ext[1:] for ext in config.SUPPORTED_EXTENSIONS],
         accept_multiple_files=True,
-        help="Upload PDF, TXT or MD files"
+        help=f"Supported formats: {', '.join(config.SUPPORTED_EXTENSIONS)}. Max file size: {config.MAX_FILE_SIZE_MB} MB each. Max {config.MAX_DOCUMENTS} documents per session."
     )
 
     if uploaded_files:
@@ -526,11 +526,18 @@ with st.sidebar:
                         with open(save_path, "wb") as out:
                             out.write(f.getbuffer())
                             
-                        # Validate if document has readable content / not empty (Contribution 23)
+                        # Validate if document has readable content / not empty
                         file_size = os.path.getsize(save_path)
                         if file_size == 0:
                             st.error(f"❌ File '{f.name}' is empty.")
                             log_diagnostic(f"File {f.name} is empty (0 bytes).")
+                            continue
+
+                        # Validate file size against MAX_FILE_SIZE_MB limit
+                        file_size_mb = file_size / (1024 * 1024)
+                        if file_size_mb > config.MAX_FILE_SIZE_MB:
+                            st.warning(f"⚠️ '{f.name}' is {file_size_mb:.1f} MB — exceeds {config.MAX_FILE_SIZE_MB} MB limit. Skipping.")
+                            log_diagnostic(f"Skipped {f.name}: size {file_size_mb:.1f} MB exceeds limit.")
                             continue
                             
                         saved_paths.append(save_path)
