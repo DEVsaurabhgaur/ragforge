@@ -14,15 +14,29 @@ import config
 errors = []
 warnings = []
 
+def is_placeholder(key: str) -> bool:
+    return any(p in key.lower() for p in ["your-", "your_", "api_key_here", "placeholder", "todo"])
+
 # ── API Key checks ─────────────────────────────────────────────────────────
-if config.LLM_PROVIDER == "openai" and not config.OPENAI_API_KEY:
-    errors.append("OPENAI_API_KEY is not set but LLM_PROVIDER=openai")
+if config.LLM_PROVIDER == "openai":
+    if not config.OPENAI_API_KEY:
+        errors.append("OPENAI_API_KEY is not set but LLM_PROVIDER=openai")
+    elif is_placeholder(config.OPENAI_API_KEY):
+        errors.append("OPENAI_API_KEY appears to be a placeholder value")
+    elif not config.OPENAI_API_KEY.startswith("sk-"):
+        warnings.append("OPENAI_API_KEY does not start with typical prefix 'sk-'")
 
-if config.LLM_PROVIDER == "gemini" and not config.GEMINI_API_KEY:
-    errors.append("GEMINI_API_KEY is not set but LLM_PROVIDER=gemini")
+if config.LLM_PROVIDER == "gemini":
+    if not config.GEMINI_API_KEY:
+        errors.append("GEMINI_API_KEY is not set but LLM_PROVIDER=gemini")
+    elif is_placeholder(config.GEMINI_API_KEY):
+        errors.append("GEMINI_API_KEY appears to be a placeholder value")
 
-if config.EMBEDDING_PROVIDER == "openai" and not config.OPENAI_API_KEY:
-    errors.append("OPENAI_API_KEY is not set but EMBEDDING_PROVIDER=openai")
+if config.EMBEDDING_PROVIDER == "openai":
+    if not config.OPENAI_API_KEY:
+        errors.append("OPENAI_API_KEY is not set but EMBEDDING_PROVIDER=openai")
+    elif is_placeholder(config.OPENAI_API_KEY):
+        errors.append("OPENAI_API_KEY appears to be a placeholder value")
 
 # ── Soft warnings ─────────────────────────────────────────────────────────
 if config.CHUNK_SIZE < 200:
