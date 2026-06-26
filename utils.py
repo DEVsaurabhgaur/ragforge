@@ -25,7 +25,13 @@ def get_pdf_files_in_dir(directory: str) -> list:
 
 def format_source_display(source_file: str, page: int | str) -> str:
     """Format a source reference for display."""
-    return f"{source_file} — Page {page}"
+    if page is None:
+        p_str = "N/A"
+    else:
+        p_str = str(page).strip()
+        if not p_str:
+            p_str = "N/A"
+    return f"{source_file} — Page {p_str}"
 
 
 def truncate_text(text: str, max_chars: int = 300) -> str:
