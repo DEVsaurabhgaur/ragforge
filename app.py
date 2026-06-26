@@ -45,6 +45,9 @@ if "messages" not in st.session_state:
 if "doc_stats" not in st.session_state:
     st.session_state["doc_stats"] = {}
 
+if "doc_names" not in st.session_state:
+    st.session_state["doc_names"] = []
+
 if "current_session_file" not in st.session_state:
     st.session_state["current_session_file"] = ""
 
