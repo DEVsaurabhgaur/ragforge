@@ -141,3 +141,15 @@ def test_invalid_collection_name_special_chars():
 
 def test_invalid_collection_name_starts_with_underscore():
     assert is_valid_collection_name("_mycoll") is False
+
+
+def test_valid_collection_name_with_dots():
+    assert is_valid_collection_name("my.collection.name") is True
+
+
+def test_invalid_collection_name_consecutive_dots():
+    assert is_valid_collection_name("my..collection") is False
+
+
+def test_invalid_collection_name_ipv4():
+    assert is_valid_collection_name("127.0.0.1") is False
