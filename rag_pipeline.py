@@ -156,12 +156,17 @@ def build_vectorstore(file_paths: List[str], chunk_size: int = None, chunk_overl
         except Exception as se:
             logging.error(f"Failed to delete database directory: {se}")
 
-    vectorstore = Chroma.from_documents(
-        documents=all_chunks,
-        embedding=embeddings,
+    # Initialize empty vector store and add documents in batches
+    vectorstore = Chroma(
         persist_directory=config.CHROMA_DB_DIR,
+        embedding_function=embeddings,
         collection_name=config.COLLECTION_NAME,
     )
+    
+    batch_size = 200
+    for idx in range(0, len(all_chunks), batch_size):
+        batch = all_chunks[idx:idx + batch_size]
+        vectorstore.add_documents(batch)
     
     # Cache the vectorstore reference
     cache_key = (config.CHROMA_DB_DIR, config.COLLECTION_NAME)
