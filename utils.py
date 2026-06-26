@@ -6,15 +6,27 @@ import os
 from pathlib import Path
 from typing import Union
 
+# Precompiled regular expressions for optimization
+_RE_MULTIPLE_NEWLINES = re.compile(r'\n{3,}')
+_RE_NON_PRINTABLE = re.compile(r'[^\x09\x0A\x0D\x20-\x7E\u00A0-\uFFFF]')
+_RE_MULTIPLE_SPACES = re.compile(r'[ \t]{2,}')
+_RE_WORDS = re.compile(r'\b\w+\b')
+_RE_FILENAME_SPECIAL = re.compile(r'[^\w\s\-.]')
+_RE_WHITESPACE = re.compile(r'[\s]+')
+_RE_COLL_START_END = re.compile(r'^[a-zA-Z0-9].*[a-zA-Z0-9]$')
+_RE_COLL_ALLOWED = re.compile(r'^[a-zA-Z0-9_\-.]+$')
+_RE_IPV4 = re.compile(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$')
+_RE_WORDS_GE3 = re.compile(r'\b\w{3,}\b')
+
 
 def clean_text(text: str) -> str:
     """Remove excessive whitespace, fix common PDF extraction artifacts."""
     # Remove multiple blank lines
-    text = re.sub(r'\n{3,}', '\n\n', text)
+    text = _RE_MULTIPLE_NEWLINES.sub('\n\n', text)
     # Remove non-printable characters (except newlines/tabs)
-    text = re.sub(r'[^\x09\x0A\x0D\x20-\x7E\u00A0-\uFFFF]', '', text)
+    text = _RE_NON_PRINTABLE.sub('', text)
     # Collapse multiple spaces
-    text = re.sub(r'[ \t]{2,}', ' ', text)
+    text = _RE_MULTIPLE_SPACES.sub(' ', text)
     return text.strip()
 
 
@@ -43,13 +55,13 @@ def truncate_text(text: str, max_chars: int = 300) -> str:
 
 def word_count(text: str) -> int:
     """Count the number of words in a string."""
-    return len(re.findall(r'\b\w+\b', text))
+    return len(_RE_WORDS.findall(text))
 
 
 def sanitize_filename(name: str) -> str:
     """Sanitize a string to be safe for use as a filename."""
-    safe = re.sub(r'[^\w\s\-.]', '', name).strip()
-    safe = re.sub(r'[\s]+', '_', safe)
+    safe = _RE_FILENAME_SPECIAL.sub('', name).strip()
+    safe = _RE_WHITESPACE.sub('_', safe)
     return safe[:100]  # Truncate to 100 chars max
 
 
@@ -71,7 +83,7 @@ _STOPWORDS = frozenset([
 
 def remove_stopwords(text: str) -> str:
     """Remove common English stopwords from a text string, preserving word boundaries."""
-    words = re.findall(r'\b\w+\b', text)
+    words = _RE_WORDS.findall(text)
     filtered = [w for w in words if w.lower() not in _STOPWORDS]
     return " ".join(filtered)
 
@@ -91,15 +103,16 @@ def is_valid_collection_name(name: str) -> bool:
     """
     if not (3 <= len(name) <= 63):
         return False
-    if not re.match(r'^[a-zA-Z0-9].*[a-zA-Z0-9]$', name):
+    if not _RE_COLL_START_END.match(name):
         return False
-    if not re.match(r'^[a-zA-Z0-9_\-.]+$', name):
+    if not _RE_COLL_ALLOWED.match(name):
         return False
     if '..' in name:
         return False
-    if re.match(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$', name):
+    if _RE_IPV4.match(name):
         return False
     return True
+
 
 def ensure_dirs():
     """Create required directories if they don't exist."""
@@ -147,7 +160,7 @@ def highlight_keywords(text: str, query: str) -> str:
     escaped_text = html.escape(text)
 
     # Extract alphanumeric words of length >= 3
-    words = re.findall(r'\b\w{3,}\b', query.lower())
+    words = _RE_WORDS_GE3.findall(query.lower())
     if not words:
         return escaped_text
 
