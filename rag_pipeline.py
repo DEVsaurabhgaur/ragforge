@@ -178,17 +178,27 @@ def vectorstore_exists() -> bool:
 
 
 def rerank_documents(docs: List[Document], query: str) -> List[Document]:
-    """Rerank retrieved documents using a lightweight keyword-overlap matching algorithm."""
+    """Rerank retrieved documents using keyword-overlap scoring with length normalization.
+
+    Scoring factors:
+    - Keyword overlap: count of matching query terms in document
+    - Length normalization: divides by log of document length to avoid bias toward longer docs
+    - Phrase match bonus: 1.5 extra points if the full query appears verbatim
+    """
     query_words = set(re.findall(r'\b\w{3,}\b', query.lower()))
     if not query_words:
         return docs
 
+    import math
     scored_docs = []
     for doc in docs:
         content_words = re.findall(r'\b\w{3,}\b', doc.page_content.lower())
+        doc_len = max(1, len(content_words))
         overlap = len(query_words.intersection(content_words))
+        # Length-normalize: reward density over sheer count
+        normalized_overlap = overlap / math.log1p(doc_len)
         phrase_match = 1.5 if query.lower() in doc.page_content.lower() else 0.0
-        score = overlap + phrase_match
+        score = normalized_overlap + phrase_match
         scored_docs.append((score, doc))
 
     scored_docs.sort(key=lambda x: x[0], reverse=True)
