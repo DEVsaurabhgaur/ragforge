@@ -544,7 +544,12 @@ with st.sidebar:
                 total_chars = 0
                 total_files = len(uploaded_files)
                 
+                seen_filenames = set()
                 for idx, f in enumerate(uploaded_files):
+                    if f.name in seen_filenames:
+                        log_diagnostic(f"Skipped duplicate uploaded file: {f.name}")
+                        continue
+                    seen_filenames.add(f.name)
                     status_text.text(f"Saving {f.name}...")
                     save_path = os.path.join(config.UPLOAD_DIR, f.name)
                     
