@@ -70,3 +70,36 @@ def test_eli5_preset_exists():
 def test_all_preset_values_nonempty():
     for key, value in config.SYSTEM_PRESETS.items():
         assert len(value) > 0, f"Preset '{key}' is empty"
+
+
+def test_validate_config_invalid_parameters():
+    import pytest
+    # Save original values
+    orig_provider = config.LLM_PROVIDER
+    orig_chunk_size = config.CHUNK_SIZE
+    orig_overlap = config.CHUNK_OVERLAP
+
+    try:
+        # Test invalid provider
+        config.LLM_PROVIDER = "invalid-provider"
+        with pytest.raises(ValueError, match="LLM_PROVIDER"):
+            config.validate_config()
+        config.LLM_PROVIDER = orig_provider
+
+        # Test invalid chunk size
+        config.CHUNK_SIZE = -10
+        with pytest.raises(ValueError, match="CHUNK_SIZE"):
+            config.validate_config()
+        config.CHUNK_SIZE = orig_chunk_size
+
+        # Test overlap >= size
+        config.CHUNK_SIZE = 500
+        config.CHUNK_OVERLAP = 600
+        with pytest.raises(ValueError, match="CHUNK_OVERLAP"):
+            config.validate_config()
+    finally:
+        # Ensure we restore original values
+        config.LLM_PROVIDER = orig_provider
+        config.CHUNK_SIZE = orig_chunk_size
+        config.CHUNK_OVERLAP = orig_overlap
+        config.validate_config()
