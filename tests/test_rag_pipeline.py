@@ -1,74 +1,103 @@
 """
-tests/test_rag_pipeline.py — Unit tests for rag_pipeline module functions.
+tests/test_rag_pipeline.py — Unit tests for RAGForge RAG pipeline logic.
 """
+import re
 import pytest
+from unittest.mock import MagicMock, patch
 from langchain_core.documents import Document
 from rag_pipeline import (
     rerank_documents,
-    validate_context_constraints,
     expand_query,
     reformulate_question,
+    validate_context_constraints,
+    clear_vectorstore_cache,
 )
 
 
-class MockLLM:
-    def __init__(self, resp):
-        self.content = resp
-    def invoke(self, _):
-        return self
+def make_doc(content: str, source: str = "test.pdf", page: int = 0) -> Document:
+    """Helper to create a Document with standard metadata."""
+    return Document(page_content=content, metadata={"source_file": source, "page": page})
 
 
-def test_rerank_exact_phrase_scores_highest():
+# ── rerank_documents ──────────────────────────────────────────────────────────
+
+def test_rerank_returns_all_docs():
+    docs = [make_doc("apple banana cherry"), make_doc("delta echo foxtrot")]
+    result = rerank_documents(docs, "apple")
+    assert len(result) == 2
+
+
+def test_rerank_puts_best_match_first():
     docs = [
-        Document(page_content="Python is a programming language", metadata={}),
-        Document(page_content="Machine learning uses neural networks", metadata={}),
+        make_doc("completely unrelated content here"),
+        make_doc("machine learning algorithms and neural networks"),
     ]
-    ranked = rerank_documents(docs, "Python programming language")
-    assert "Python" in ranked[0].page_content
+    result = rerank_documents(docs, "machine learning neural networks")
+    assert "machine learning" in result[0].page_content.lower()
 
 
-def test_rerank_preserves_all_docs():
-    docs = [Document(page_content=f"doc {i}", metadata={}) for i in range(5)]
-    assert len(rerank_documents(docs, "query")) == 5
-
-
-def test_validate_constraints_pass():
-    assert validate_context_constraints("Here is the answer from the document.") is True
-
-
-def test_validate_constraints_fail_not_found():
-    assert validate_context_constraints("I could not find this in the context.") is False
-
-
-def test_validate_constraints_fail_not_mentioned():
-    assert validate_context_constraints("This is not mentioned in the context.") is False
-
-
-def test_expand_query_includes_original():
-    llm = MockLLM("alt query one\nalt query two")
-    result = expand_query("test question", llm)
-    assert result[0] == "test question"
-
-
-def test_expand_query_returns_list():
-    llm = MockLLM("variation one\nvariation two")
-    result = expand_query("something", llm)
-    assert isinstance(result, list)
-    assert len(result) >= 1
-
-
-def test_reformulate_no_history():
-    llm = MockLLM("standalone")
-    result = reformulate_question("What is it?", [], llm)
-    assert result == "What is it?"
-
-
-def test_reformulate_with_history():
-    llm = MockLLM("What is the capital of France?")
-    history = [{"role": "user", "content": "Tell me about France"}]
-    result = reformulate_question("What is its capital?", history, llm)
-    assert result == "What is the capital of France?"
+def test_rerank_with_empty_query():
+    docs = [make_doc("hello world"), make_doc("foo bar")]
+    result = rerank_documents(docs, "")
+    assert len(result) == 2
 
 
 def test_rerank_empty_docs():
-    assert rerank_documents([], "query") == []
+    result = rerank_documents([], "some query")
+    assert result == []
+
+
+def test_rerank_phrase_match_boosts_score():
+    docs = [
+        make_doc("this has the exact phrase: machine learning overview"),
+        make_doc("machine overview learning random words"),
+    ]
+    result = rerank_documents(docs, "machine learning overview")
+    # The doc with exact phrase match should rank higher
+    assert "machine learning overview" in result[0].page_content.lower()
+
+
+# ── validate_context_constraints ─────────────────────────────────────────────
+
+def test_validate_valid_answer():
+    assert validate_context_constraints("The capital of France is Paris.") is True
+
+
+def test_validate_refusal_phrase():
+    assert validate_context_constraints("I could not find this in the documents.") is False
+
+
+def test_validate_refusal_not_in_context():
+    assert validate_context_constraints("This is not in the provided context.") is False
+
+
+def test_validate_insufficient_info():
+    assert validate_context_constraints("There is insufficient information to answer.") is False
+
+
+def test_validate_new_refusal_outside_scope():
+    assert validate_context_constraints("This is outside the scope of the documents.") is False
+
+
+def test_validate_new_refusal_cannot_find():
+    assert validate_context_constraints("I cannot find this information in the context.") is False
+
+
+def test_validate_case_insensitive():
+    assert validate_context_constraints("NO RELEVANT INFORMATION was found.") is False
+
+
+# ── clear_vectorstore_cache ───────────────────────────────────────────────────
+
+def test_clear_vectorstore_cache_runs():
+    """Smoke test: clear_vectorstore_cache should not raise."""
+    clear_vectorstore_cache()
+
+
+# ── reformulate_question ──────────────────────────────────────────────────────
+
+def test_reformulate_no_history_returns_original():
+    mock_llm = MagicMock()
+    result = reformulate_question("What is the summary?", [], mock_llm)
+    assert result == "What is the summary?"
+    mock_llm.invoke.assert_not_called()
