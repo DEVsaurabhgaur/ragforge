@@ -199,7 +199,7 @@ def rerank_documents(docs: List[Document], query: str) -> List[Document]:
     import math
     scored_docs = []
     for doc in docs:
-        content_words = re.findall(r'\b\w{3,}\b', doc.page_content.lower())
+        content_words = set(re.findall(r'\b\w{3,}\b', doc.page_content.lower()))
         doc_len = max(1, len(content_words))
         overlap = len(query_words.intersection(content_words))
         # Length-normalize: reward density over sheer count
