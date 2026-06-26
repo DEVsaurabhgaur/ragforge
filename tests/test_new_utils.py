@@ -153,3 +153,16 @@ def test_invalid_collection_name_consecutive_dots():
 
 def test_invalid_collection_name_ipv4():
     assert is_valid_collection_name("127.0.0.1") is False
+
+
+def test_estimate_cost_specific_models():
+    from utils import estimate_cost
+    # gpt-4o should be more expensive than gpt-4o-mini
+    cost_mini = estimate_cost(1000, 500, provider="openai", model="gpt-4o-mini")
+    cost_pro = estimate_cost(1000, 500, provider="openai", model="gpt-4o")
+    assert cost_pro > cost_mini
+
+    # gemini-2.5-pro should be more expensive than gemini-2.5-flash
+    cost_flash = estimate_cost(1000, 500, provider="gemini", model="gemini-2.5-flash")
+    cost_gem_pro = estimate_cost(1000, 500, provider="gemini", model="gemini-2.5-pro")
+    assert cost_gem_pro > cost_flash
