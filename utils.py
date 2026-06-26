@@ -70,6 +70,27 @@ def remove_stopwords(text: str) -> str:
     return " ".join(filtered)
 
 
+def is_valid_collection_name(name: str) -> bool:
+    """Validate a ChromaDB collection name against ChromaDB naming constraints.
+
+    Rules:
+    - Must be 3-63 characters
+    - Must start and end with an alphanumeric character
+    - May only contain alphanumeric characters, underscores, or hyphens
+    - Must not contain consecutive periods
+    - Must not be a valid IPv4 address
+
+    Returns:
+        True if the name is valid, False otherwise.
+    """
+    if not (3 <= len(name) <= 63):
+        return False
+    if not re.match(r'^[a-zA-Z0-9].*[a-zA-Z0-9]$', name):
+        return False
+    if not re.match(r'^[a-zA-Z0-9_-]+$', name):
+        return False
+    return True
+
 def ensure_dirs():
     """Create required directories if they don't exist."""
     from config import CHROMA_DB_DIR, UPLOAD_DIR, SESSION_DIR
