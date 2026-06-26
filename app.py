@@ -694,9 +694,14 @@ with st.sidebar:
     if sessions:
         st.divider()
         st.markdown("**💾 Load Saved Session**")
+        search_term = st.text_input("🔍 Search sessions", placeholder="Type keywords...", key="sess_search_input")
+        filtered_sessions = sessions
+        if search_term.strip():
+            filtered_sessions = [s for s in sessions if search_term.lower() in s.lower()]
+            
         selected_session = st.selectbox(
             "Choose a session",
-            options=["-- Select --"] + sessions,
+            options=["-- Select --"] + filtered_sessions,
             key="session_select"
         )
         if selected_session != "-- Select --":
