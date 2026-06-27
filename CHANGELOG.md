@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.1] - 2026-06-27
+### Added
+- Redesigned Streamlit custom CSS stylesheet for a premium glassmorphic dark mode interface, including Outfit/Inter typography, radial-gradient mesh background, and animated dot indicators.
+- Added `scripts/db_stats.py` utility to check ChromaDB vector store status, listing unique documents and chunks with a `--json` output option.
+- Added `tests/test_db_stats.py` test suite containing unit tests for `db_stats.py` console and JSON output.
+- Updated `README.md` project structure reference tree to include the new script and test files.
+
+### Fixed
+- Fixed JSON export button label emoji layout in `app.py`.
+
 ## [2.1.0] - 2026-06-26
 ### Added
 - Google Inter font via `@import` for premium typography across all UI elements
