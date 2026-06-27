@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # 🔍 RAGForge
 
@@ -213,11 +213,13 @@ ragforge/
 ├── tests/                  # Pytest unit tests
 │   ├── test_pipeline.py
 │   ├── test_utils.py
+│   ├── test_db_stats.py
 │   └── test_config.py
 │
 ├── scripts/                # Utility scripts
 │   ├── ingest.py           # CLI document ingestion
 │   ├── reset_db.py         # Wipe ChromaDB
+│   ├── db_stats.py         # Inspect ChromaDB collection contents
 │   ├── validate_env.py     # Check environment config
 │   ├── export_sessions.py  # Export all chat sessions
 │   └── check_deps.py       # Verify installed packages
