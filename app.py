@@ -62,35 +62,47 @@ def log_diagnostic(msg: str):
 # ── Custom CSS for Rich Aesthetics ─────────────────────────────
 st.markdown("""
 <style>
-    /* Import Google Fonts - Inter */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    /* Import Google Fonts - Outfit for headers, Inter for body text */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800;900&display=swap');
 
-    /* Global font override */
+    /* Global Typography overrides */
     html, body, [class*="css"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        background-color: #0b0c10 !important;
+        color: #e2e8f0 !important;
     }
 
-    /* Dark aesthetic overrides */
+    h1, h2, h3, h4, h5, h6, .hero-title {
+        font-family: 'Outfit', sans-serif !important;
+    }
+
+    /* Core Page background mesh */
     .stApp {
-        background-color: #0d0e15;
+        background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%),
+                    #0a0b10 !important;
         color: #f1f5f9;
     }
 
-    /* Sidebar styling */
+    /* Sidebar Glassmorphism */
     section[data-testid="stSidebar"] {
-        background-color: #11131f !important;
-        border-right: 1px solid #1f2937;
+        background-color: rgba(14, 16, 26, 0.95) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
 
     /* ── Gradient Hero Header ── */
     .hero-header {
-        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #0d0e15 60%, #0f172a 100%);
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        border-radius: 16px;
-        padding: 28px 32px;
-        margin-bottom: 24px;
+        background: linear-gradient(135deg, rgba(30, 27, 75, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 20px;
+        padding: 32px 36px;
+        margin-bottom: 28px;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(4px);
     }
     .hero-header::before {
         content: '';
@@ -99,26 +111,26 @@ st.markdown("""
         left: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
-        animation: pulse-bg 6s ease-in-out infinite alternate;
+        background: radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        animation: pulse-bg 8s ease-in-out infinite alternate;
         pointer-events: none;
     }
     @keyframes pulse-bg {
         0%   { opacity: 0.4; transform: scale(1); }
-        100% { opacity: 1;   transform: scale(1.1); }
+        100% { opacity: 1;   transform: scale(1.05); }
     }
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        background: linear-gradient(90deg, #818cf8, #c7d2fe, #6366f1);
+        background: linear-gradient(90deg, #a5b4fc, #e0e7ff, #c084fc);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        margin: 0 0 6px 0;
-        letter-spacing: -0.5px;
+        margin: 0 0 8px 0;
+        letter-spacing: -0.8px;
     }
     .hero-subtitle {
-        font-size: 0.95rem;
+        font-size: 1.0rem;
         color: #94a3b8;
         margin: 0;
         font-weight: 400;
@@ -126,211 +138,263 @@ st.markdown("""
     .hero-badge {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        background: rgba(99, 102, 241, 0.12);
-        border: 1px solid rgba(99, 102, 241, 0.3);
+        gap: 8px;
+        background: rgba(99, 102, 241, 0.08);
+        border: 1px solid rgba(99, 102, 241, 0.2);
         color: #a5b4fc;
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         font-weight: 600;
-        padding: 4px 12px;
+        padding: 6px 14px;
         border-radius: 20px;
-        margin-top: 14px;
-        letter-spacing: 0.3px;
+        margin-top: 16px;
+        letter-spacing: 0.4px;
+        box-shadow: 0 0 12px rgba(99, 102, 241, 0.1);
     }
     .hero-badge .dot {
-        width: 6px;
-        height: 6px;
-        background: #6366f1;
+        width: 8px;
+        height: 8px;
+        background: #818cf8;
         border-radius: 50%;
-        animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+        box-shadow: 0 0 8px #818cf8;
+        animation: ping 1.8s cubic-bezier(0,0,0.2,1) infinite;
     }
     @keyframes ping {
         0%   { transform: scale(1); opacity: 1; }
-        75%, 100% { transform: scale(2); opacity: 0; }
+        75%, 100% { transform: scale(2.2); opacity: 0; }
     }
 
-    /* ── Cards and boxes ── */
+    /* ── Source cards with subtle borders ── */
     .source-card {
-        background: linear-gradient(135deg, #161a29 0%, #1a1f32 100%);
-        border-left: 4px solid #6366f1;
-        padding: 14px 18px;
-        border-radius: 10px;
-        margin-bottom: 12px;
-        font-size: 0.88rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        border: 1px solid rgba(99, 102, 241, 0.12);
-        border-left: 4px solid #6366f1;
+        background: linear-gradient(135deg, rgba(20, 24, 40, 0.6) 0%, rgba(26, 32, 53, 0.6) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-left: 4px solid #818cf8 !important;
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-bottom: 14px;
+        font-size: 0.9rem;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
     }
     .source-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.3) !important;
+        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.12);
     }
 
     .badge {
-        background: rgba(99, 102, 241, 0.15);
-        color: #818cf8;
+        background: rgba(129, 140, 248, 0.12);
+        color: #a5b4fc;
         padding: 3px 10px;
         border-radius: 12px;
         font-size: 0.78rem;
         font-weight: 600;
-        border: 1px solid rgba(99, 102, 241, 0.3);
+        border: 1px solid rgba(129, 140, 248, 0.2);
         letter-spacing: 0.3px;
     }
 
-    /* ── Stats Cards with glassmorphism ── */
+    /* ── Glassmorphic Stats ── */
     .stats-card {
-        background: linear-gradient(135deg, rgba(22, 26, 41, 0.9) 0%, rgba(26, 31, 50, 0.9) 100%);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background: rgba(22, 26, 45, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         padding: 16px;
-        border-radius: 10px;
-        border: 1px solid rgba(99, 102, 241, 0.15);
-        margin-bottom: 10px;
-        transition: border-color 0.2s ease;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
     }
     .stats-card:hover {
-        border-color: rgba(99, 102, 241, 0.35);
+        border-color: rgba(99, 102, 241, 0.2);
+        background: rgba(22, 26, 45, 0.8);
     }
     .stats-label {
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        color: #64748b;
-        font-weight: 600;
+        color: #94a3b8;
+        font-weight: 500;
         margin-bottom: 4px;
     }
     .stats-val {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         font-weight: 700;
-        color: #818cf8;
+        color: #a5b4fc;
         line-height: 1;
     }
 
     .metric-badge {
         display: inline-block;
-        background: rgba(16, 185, 129, 0.1);
-        color: #10b981;
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        font-size: 0.75rem;
-        padding: 2px 8px;
-        border-radius: 4px;
+        background: rgba(16, 185, 129, 0.08);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.15);
+        font-size: 0.78rem;
+        padding: 3px 8px;
+        border-radius: 6px;
         margin-right: 6px;
         font-weight: 500;
     }
 
     .metric-cost {
         display: inline-block;
-        background: rgba(245, 158, 11, 0.1);
-        color: #f59e0b;
-        border: 1px solid rgba(245, 158, 11, 0.2);
-        font-size: 0.75rem;
-        padding: 2px 8px;
-        border-radius: 4px;
+        background: rgba(245, 158, 11, 0.08);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.15);
+        font-size: 0.78rem;
+        padding: 3px 8px;
+        border-radius: 6px;
         font-weight: 500;
     }
 
-    /* ── Logs styling ── */
+    /* ── Logs console styling ── */
     .logs-box {
-        font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
         font-size: 0.80rem;
-        background: linear-gradient(180deg, #05070f 0%, #080a14 100%);
+        background: #05060b !important;
         color: #38bdf8;
-        padding: 12px 14px;
-        border-radius: 8px;
-        max-height: 220px;
+        padding: 16px;
+        border-radius: 10px;
+        max-height: 240px;
         overflow-y: auto;
-        border: 1px solid #1e293b;
+        border: 1px solid rgba(255, 255, 255, 0.05);
         line-height: 1.6;
     }
     .logs-box::-webkit-scrollbar {
-        width: 5px;
+        width: 6px;
     }
     .logs-box::-webkit-scrollbar-track {
-        background: #0d0e15;
+        background: #05060b;
     }
     .logs-box::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-    }
-    .logs-box::-webkit-scrollbar-thumb:hover {
-        background: #6366f1;
+        background: #1e293b;
+        border-radius: 3px;
     }
 
-    /* ── Chat message fade-in animation ── */
+    /* ── Chat styling upgrades ── */
     [data-testid="stChatMessage"] {
+        background-color: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.03) !important;
+        border-radius: 16px !important;
+        padding: 18px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
         animation: fadeSlideIn 0.3s ease-out;
     }
+    [data-testid="stChatMessage"]:hover {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        border-color: rgba(255, 255, 255, 0.05) !important;
+    }
     @keyframes fadeSlideIn {
-        from { opacity: 0; transform: translateY(8px); }
+        from { opacity: 0; transform: translateY(6px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Buttons ── */
+    /* ── Buttons styling ── */
     .stButton > button {
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 8px;
-        font-weight: 500;
-        letter-spacing: 0.2px;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        padding: 8px 16px !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: rgba(255, 255, 255, 0.02) !important;
     }
     .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+        background: rgba(99, 102, 241, 0.1) !important;
+        border-color: rgba(99, 102, 241, 0.4) !important;
+        color: #c7d2fe !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
     }
     .stButton > button:active {
         transform: translateY(0);
     }
 
-    /* ── Progress bar color ── */
+    /* Primary buttons */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(90deg, #6366f1, #7c3aed) !important;
+        color: white !important;
+        border: none !important;
+    }
+    .stButton > button[kind="primary"]:hover {
+        background: linear-gradient(90deg, #818cf8, #8b5cf6) !important;
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35) !important;
+    }
+
+    /* ── Progress bar ── */
     .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #6366f1, #818cf8);
-        border-radius: 4px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
+        border-radius: 6px;
     }
 
-    /* ── Custom scrollbar for main area ── */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0d0e15; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+    /* ── Custom App Scrollbar ── */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0b10; }
+    ::-webkit-scrollbar-thumb { background: #1b1d2a; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3b4261; }
 
-    /* ── Spinner color override ── */
-    .stSpinner > div {
-        border-top-color: #6366f1 !important;
-    }
-
-    /* ── Info/warning/success alert tweaks ── */
+    /* ── Alert boxes ── */
     .stAlert {
-        border-radius: 10px !important;
-        border-left-width: 4px !important;
+        background-color: rgba(30, 41, 59, 0.4) !important;
+        border-radius: 12px !important;
+        border-left: 4px solid #6366f1 !important;
+        color: #e2e8f0 !important;
     }
 
-    /* ── Expander styling ── */
+    /* ── Streamlit Expander custom look ── */
     .streamlit-expanderHeader {
+        background-color: rgba(255, 255, 255, 0.01) !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.03) !important;
         font-weight: 600 !important;
-        font-size: 0.9rem !important;
+        color: #cbd5e1 !important;
+        transition: all 0.2s ease;
+    }
+    .streamlit-expanderHeader:hover {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
     }
 
-    /* ── Upload area hover effect ── */
+    /* ── File Upload Zone ── */
+    [data-testid="stFileUploadDropzone"] {
+        border: 2px dashed rgba(255, 255, 255, 0.1) !important;
+        border-radius: 14px !important;
+        background: rgba(255, 255, 255, 0.01) !important;
+        transition: all 0.25s ease !important;
+    }
     [data-testid="stFileUploadDropzone"]:hover {
         border-color: #6366f1 !important;
-        background: rgba(99, 102, 241, 0.04) !important;
+        background: rgba(99, 102, 241, 0.03) !important;
     }
 
-    /* ── Selectbox and slider accent ── */
+    /* ── Selectbox and slider inputs ── */
     [data-testid="stSelectbox"] > div:first-child {
-        border-radius: 8px !important;
+        border-radius: 10px !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
     }
 
-    /* ── Chat input focus ── */
+    /* ── Chat input area styling ── */
+    [data-testid="stChatInput"] {
+        background-color: rgba(14, 16, 26, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-radius: 16px !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+    }
+    [data-testid="stChatInput"] textarea {
+        background-color: transparent !important;
+        color: #f8fafc !important;
+        font-size: 0.95rem !important;
+    }
     [data-testid="stChatInput"] textarea:focus {
         border-color: #6366f1 !important;
-        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
     }
 
-    /* ── Divider style ── */
+    /* ── Dividers ── */
     hr {
-        border-color: #1e293b !important;
-        margin: 12px 0 !important;
+        border-color: rgba(255, 255, 255, 0.06) !important;
+        margin: 16px 0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
