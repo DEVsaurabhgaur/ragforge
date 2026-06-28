@@ -65,3 +65,5 @@ If detected, it replaces the response with a standard safe fallback message.
 7. **Streamlit Port**: Streamlit defaults to port 8501, but will auto-increment to 8502, 8503 if 8501 is busy.
 
 8. **Python version**: RAGForge is optimized for Python 3.10+; running on 3.8 or 3.9 may require manual dependency adjustments.
+
+9. **Docker Resource Limits**: Assign at least 2GB of memory to Docker containers to prevent PyTorch crash during model loading.
