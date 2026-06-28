@@ -25,6 +25,7 @@ def test_supported_extensions_includes_pdf():
 
 
 def test_supported_extensions_includes_txt():
+    """Verify TXT extension is in the supported extension list."""
     assert ".txt" in config.SUPPORTED_EXTENSIONS
 
 
