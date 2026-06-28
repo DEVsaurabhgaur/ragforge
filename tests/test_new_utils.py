@@ -36,6 +36,7 @@ def test_word_count_with_punctuation():
 
 
 def test_sanitize_filename_removes_special_chars():
+    """Verify sanitize_filename strips special OS characters."""
     result = sanitize_filename("My File: <name> *#2!")
     assert "<" not in result
     assert ">" not in result
