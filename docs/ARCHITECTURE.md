@@ -159,3 +159,5 @@ ragforge/
 10. **Conversational Reformulation**: The reformulator rewrites user queries to resolve ambiguous pronouns (e.g. 'it').
 
 11. **Fallback Cost Calculation**: For custom or non-standard models, fallback prices match Gemini/OpenAI defaults.
+
+12. **Vectorstore caching**: Stores references to Chroma instances to prevent double-initialization locks.
