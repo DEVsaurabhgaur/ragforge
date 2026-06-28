@@ -317,3 +317,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **License**: RAGForge is licensed under the MIT License.
 
 * **Python Requirements**: Supports Python versions 3.10 and newer.
+
+* **API Key Free Tier**: Supports local HuggingFace embeddings out of the box.
