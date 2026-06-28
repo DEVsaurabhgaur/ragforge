@@ -102,3 +102,5 @@ Please open a GitHub issue with:
 6. **Test Independence**: Every test should utilize temporary directories or mock setups to ensure zero side-effects.
 
 7. **Black Formatting**: Run `black .` to automatically standardise formatting before staging PR commits.
+
+8. **Import Ordering**: Maintain imports grouped by standard library, third-party libraries, and local modules.
