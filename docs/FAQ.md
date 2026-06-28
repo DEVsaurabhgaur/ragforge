@@ -71,3 +71,5 @@ If detected, it replaces the response with a standard safe fallback message.
 10. **Custom Chunk Size**: Ensure chunk overlap is always strictly smaller than chunk size to prevent ingestion looping.
 
 11. **Keyword Overlap Reranking**: Case sensitivity is stripped out during keyword matching to optimize overlap retrieval.
+
+12. **Hallucination Guard Phrase**: Standard refusal phrases can be expanded in `rag_pipeline.py` if custom LLMs are used.
