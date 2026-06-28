@@ -155,3 +155,5 @@ ragforge/
 8. **Resource Isolation**: Uploaded files are moved to `uploaded_docs` for indexing, isolating system folders.
 
 9. **Precompiled Regex Performance**: Precompiling expressions in `utils.py` saves CPU overhead on large inputs.
+
+10. **Conversational Reformulation**: The reformulator rewrites user queries to resolve ambiguous pronouns (e.g. 'it').
