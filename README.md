@@ -327,3 +327,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **Session persistence**: Saving and loading conversation histories is supported via local JSON.
 
 * **Token Estimations**: Displays token count and USD pricing for transparency.
+
+* **Citations**: Click source annotations in responses to see exact documents and pages.
