@@ -147,3 +147,5 @@ ragforge/
 4. **Ensemble Retrieval**: BM25 keyword matching runs in parallel with semantic search to guarantee precision.
 
 5. **Reranker Pipeline**: The custom reranker ranks high-recall documents based on overlapping keywords and phrases.
+
+6. **Hallucination Validator**: Rejects response structures that match pre-defined rejection expressions to ensure safety.
