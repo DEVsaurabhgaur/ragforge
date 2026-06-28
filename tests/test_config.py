@@ -5,6 +5,7 @@ import config
 
 
 def test_chunk_size_positive():
+    """Verify CHUNK_SIZE is configured as a positive integer."""
     assert config.CHUNK_SIZE > 0
 
 
