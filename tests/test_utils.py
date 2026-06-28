@@ -42,6 +42,7 @@ def test_format_source_display():
 
 
 def test_count_tokens_positive():
+    """Verify count_tokens returns positive count for simple string."""
     assert count_tokens("Hello world") > 0
 
 
