@@ -29,6 +29,7 @@ def test_word_count_single_word():
 
 
 def test_word_count_with_punctuation():
+    """Verify word_count ignores standard punctuation marks."""
     # punctuation is not counted as words
     result = word_count("Hello, world! How are you?")
     assert result == 5
