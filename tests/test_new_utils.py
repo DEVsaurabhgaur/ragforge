@@ -52,6 +52,7 @@ def test_sanitize_filename_replaces_spaces_with_underscores():
 
 
 def test_sanitize_filename_truncates_long_names():
+    """Verify sanitize_filename limits length to 100 characters."""
     long_name = "a" * 200
     result = sanitize_filename(long_name)
     assert len(result) <= 100
