@@ -97,3 +97,7 @@ You can monitor container health with:
 ```bash
 docker inspect --format='{{.State.Health.Status}}' <container_id>
 ```
+
+## 🚀 Production Deployment Considerations
+
+1. **Docker Compose Logs**: Run `docker-compose logs --tail=100 -f` to monitor active user query statuses.
