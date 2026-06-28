@@ -94,3 +94,5 @@ Please open a GitHub issue with:
 2. **Docstrings Style**: Use Google Style Python docstrings with Args, Returns, and Raises sections.
 
 3. **Error Handling**: Use broad except blocks sparingly. Catch specific exceptions (e.g. FileNotFoundError, ValueError).
+
+4. **Logging Levels**: Use `logging.info()` for pipeline progression and `logging.error()` for critical failures.
