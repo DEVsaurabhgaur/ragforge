@@ -96,3 +96,5 @@ Please open a GitHub issue with:
 3. **Error Handling**: Use broad except blocks sparingly. Catch specific exceptions (e.g. FileNotFoundError, ValueError).
 
 4. **Logging Levels**: Use `logging.info()` for pipeline progression and `logging.error()` for critical failures.
+
+5. **RegEx Precompilation**: Precompile heavy regular expressions at the module level for performance optimization.
