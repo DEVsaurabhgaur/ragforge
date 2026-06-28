@@ -116,3 +116,5 @@ Please open a GitHub issue with:
 13. **Token Usage Precision**: tiktoken is the source of truth for token counting; fallback counts are estimates only.
 
 14. **Markdown Table updates**: Update system preset tables when new prompt templates are introduced.
+
+15. **PR Checklist**: Verify that `pytest tests/ -v` completes with zero errors prior to pushing commits.
