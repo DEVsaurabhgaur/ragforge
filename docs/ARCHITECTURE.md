@@ -135,3 +135,7 @@ ragforge/
 ├── docs/                   # Documentation
 └── .github/workflows/      # CI/CD
 ```
+
+## 📐 Module Relationship and Design Notes
+
+1. **Loose Coupling**: The pipeline logic in `rag_pipeline.py` is independent of the Streamlit UI in `app.py`.
