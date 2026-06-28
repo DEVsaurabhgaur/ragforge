@@ -163,3 +163,5 @@ ragforge/
 12. **Vectorstore caching**: Stores references to Chroma instances to prevent double-initialization locks.
 
 13. **Markdown Export Format**: Standardizes conversational downloads to follow clean GitHub Markdown syntax.
+
+14. **Interactive Hyperparameters**: Streamlit controls update parameters directly passed to pipeline queries.
