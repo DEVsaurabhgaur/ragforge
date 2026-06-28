@@ -105,3 +105,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 2. **HuggingFace Spaces Cache**: Configure `HF_HOME` environment variable if cache write permissions are restricted on HuggingFace.
 
 3. **Reverse Proxying**: When routing through Nginx or Apache, ensure websocket support is enabled for Streamlit.
+
+4. **Secure API Key Handling**: Never hardcode API keys in `config.py`. Use environment variables or secret managers.
