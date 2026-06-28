@@ -108,3 +108,5 @@ Please open a GitHub issue with:
 9. **Constant Naming**: Define configuration constants in UPPER_CASE inside the centralized `config.py` file.
 
 10. **Conventional Commit Types**: Use `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore` tags in commit titles.
+
+11. **Streamlit UI Components**: Place all user-facing interactive elements inside sidebar or main container cleanly.
