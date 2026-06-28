@@ -45,6 +45,7 @@ def test_retrieval_mode_valid():
 
 
 def test_temperature_in_range():
+    """Verify default temperature is between 0.0 and 1.0."""
     assert 0.0 <= config.DEFAULT_TEMPERATURE <= 1.0
 
 
