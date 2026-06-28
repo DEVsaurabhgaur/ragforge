@@ -86,3 +86,7 @@ Please open a GitHub issue with:
 - Steps to reproduce
 - Expected vs. actual behavior
 - Python version and OS
+
+## 🛠️ Code Conventions & Standards Details
+
+1. **Type Annotations**: Always declare input and output types for all public utility and pipeline functions.
