@@ -23,6 +23,7 @@ def test_clean_text_removes_extra_newlines():
 
 
 def test_truncate_at_word_boundary():
+    """Verify truncate_text truncates at a clean word boundary."""
     result = truncate_text("one two three four", 10)
     assert result.endswith("...")
     assert "four" not in result
