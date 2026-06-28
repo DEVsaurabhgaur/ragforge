@@ -139,3 +139,5 @@ ragforge/
 ## 📐 Module Relationship and Design Notes
 
 1. **Loose Coupling**: The pipeline logic in `rag_pipeline.py` is independent of the Streamlit UI in `app.py`.
+
+2. **State Management**: Streamlit `session_state` is used to persist chat history, loaded files, and configurations.
