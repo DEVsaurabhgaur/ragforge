@@ -30,6 +30,7 @@ def test_truncate_at_word_boundary():
 
 
 def test_truncate_returns_full_when_short():
+    """Verify truncate_text returns full text if below max length."""
     assert truncate_text("hi", 100) == "hi"
 
 
