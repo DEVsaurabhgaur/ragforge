@@ -14,6 +14,7 @@ from utils import (
 
 
 def test_word_count_basic():
+    """Verify word_count counts standard space-separated words."""
     assert word_count("hello world foo") == 3
 
 
