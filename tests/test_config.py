@@ -20,6 +20,7 @@ def test_top_k_positive():
 
 
 def test_supported_extensions_includes_pdf():
+    """Verify PDF extension is in the supported extension list."""
     assert ".pdf" in config.SUPPORTED_EXTENSIONS
 
 
