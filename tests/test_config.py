@@ -50,6 +50,7 @@ def test_temperature_in_range():
 
 
 def test_collection_name_set():
+    """Verify collection name is configured and non-empty."""
     assert config.COLLECTION_NAME != ""
 
 
