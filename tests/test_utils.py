@@ -60,6 +60,7 @@ def test_estimate_cost_gemini():
 
 
 def test_highlight_keywords_marks_word():
+    """Verify query keyword highlighting injects mark HTML tags."""
     result = highlight_keywords("The quick brown fox", "quick fox")
     assert "<mark" in result
     assert "quick" in result
