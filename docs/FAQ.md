@@ -47,3 +47,7 @@ embeddings are computed entirely on your machine using HuggingFace `all-MiniLM-L
 After the LLM responds, RAGForge checks the answer for known refusal phrases
 (e.g., "not in the provided context", "outside the scope of the documents").
 If detected, it replaces the response with a standard safe fallback message.
+
+## 💡 Developer Tips & Troubleshooting
+
+1. **Windows File Locking**: ChromaDB files might get locked by active streamlit processes on Windows. Restart streamlit to unlock.
