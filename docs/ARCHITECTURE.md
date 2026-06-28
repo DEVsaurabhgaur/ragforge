@@ -151,3 +151,5 @@ ragforge/
 6. **Hallucination Validator**: Rejects response structures that match pre-defined rejection expressions to ensure safety.
 
 7. **Re-entrancy in config**: `config.py` validates values at startup, throwing errors early if variables are invalid.
+
+8. **Resource Isolation**: Uploaded files are moved to `uploaded_docs` for indexing, isolating system folders.
