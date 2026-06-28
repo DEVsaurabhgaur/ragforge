@@ -61,3 +61,5 @@ If detected, it replaces the response with a standard safe fallback message.
 5. **Session File Cleanup**: Old json sessions in `.sessions/` can be deleted manually to free up disk space.
 
 6. **Tiktoken Encoding**: For non-OpenAI models, a fallback char-length heuristic is used to avoid Tiktoken load overhead.
+
+7. **Streamlit Port**: Streamlit defaults to port 8501, but will auto-increment to 8502, 8503 if 8501 is busy.
