@@ -15,6 +15,7 @@ def test_chunk_overlap_less_than_size():
 
 
 def test_top_k_positive():
+    """Verify TOP_K_RESULTS is configured as a positive integer."""
     assert config.TOP_K_RESULTS > 0
 
 
