@@ -165,3 +165,5 @@ ragforge/
 13. **Markdown Export Format**: Standardizes conversational downloads to follow clean GitHub Markdown syntax.
 
 14. **Interactive Hyperparameters**: Streamlit controls update parameters directly passed to pipeline queries.
+
+15. **Diagnostics Interface**: Collects pipeline execution timings and outputs them to the console overlay.
