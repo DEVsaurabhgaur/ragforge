@@ -30,6 +30,7 @@ def test_supported_extensions_includes_txt():
 
 
 def test_system_presets_not_empty():
+    """Verify system presets dictionary contains configured modes."""
     assert len(config.SYSTEM_PRESETS) > 0
 
 
