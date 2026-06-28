@@ -59,6 +59,7 @@ def test_sanitize_filename_truncates_long_names():
 
 
 def test_sanitize_filename_empty():
+    """Verify sanitize_filename handles empty string cleanly."""
     assert sanitize_filename("") == ""
 
 
