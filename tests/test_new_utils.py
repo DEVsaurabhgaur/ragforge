@@ -19,6 +19,7 @@ def test_word_count_basic():
 
 
 def test_word_count_empty():
+    """Verify word_count returns 0 for an empty string."""
     assert word_count("") == 0
 
 
