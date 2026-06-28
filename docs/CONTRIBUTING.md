@@ -104,3 +104,5 @@ Please open a GitHub issue with:
 7. **Black Formatting**: Run `black .` to automatically standardise formatting before staging PR commits.
 
 8. **Import Ordering**: Maintain imports grouped by standard library, third-party libraries, and local modules.
+
+9. **Constant Naming**: Define configuration constants in UPPER_CASE inside the centralized `config.py` file.
