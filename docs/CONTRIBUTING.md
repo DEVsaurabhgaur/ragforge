@@ -114,3 +114,5 @@ Please open a GitHub issue with:
 12. **Vectorstore Cache Lifecycle**: Call `clear_vectorstore_cache()` when resets or configuration modifications are made.
 
 13. **Token Usage Precision**: tiktoken is the source of truth for token counting; fallback counts are estimates only.
+
+14. **Markdown Table updates**: Update system preset tables when new prompt templates are introduced.
