@@ -55,3 +55,5 @@ If detected, it replaces the response with a standard safe fallback message.
 2. **API Keys**: Ensure your Gemini key is updated; expired keys return 400 Bad Request error.
 
 3. **Local Embeddings RAM**: The `all-MiniLM-L6-v2` model is cached locally in `~/.cache/torch` or similar directory.
+
+4. **Custom Storage Directories**: You can override the ChromaDB and upload directories by editing `config.py` or `.env` variables.
