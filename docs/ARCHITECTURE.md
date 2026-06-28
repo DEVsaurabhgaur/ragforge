@@ -141,3 +141,5 @@ ragforge/
 1. **Loose Coupling**: The pipeline logic in `rag_pipeline.py` is independent of the Streamlit UI in `app.py`.
 
 2. **State Management**: Streamlit `session_state` is used to persist chat history, loaded files, and configurations.
+
+3. **ChromaDB Backend**: ChromaDB stores document chunks in local SQLite format, avoiding overhead of external databases.
