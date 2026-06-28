@@ -35,6 +35,7 @@ def test_system_presets_not_empty():
 
 
 def test_default_system_prompt_not_empty():
+    """Verify default system prompt is a non-empty string."""
     assert len(config.DEFAULT_SYSTEM_PROMPT) > 0
 
 
