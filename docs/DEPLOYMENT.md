@@ -125,3 +125,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 12. **Gevent / Eventlet Compatibility**: Streamlit utilizes websockets; avoid event-loop monkeypatching during initialization.
 
 13. **Temp directories cleanups**: Clean up `/tmp` or local `uploaded_docs` via a cron job to avoid disk space exhaustion.
+
+14. **Gemini API Limits**: Free tier Gemini has rate limits (RPM/TPM). Configure delay controls or request quota increases.
