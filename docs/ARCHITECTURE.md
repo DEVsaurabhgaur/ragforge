@@ -145,3 +145,5 @@ ragforge/
 3. **ChromaDB Backend**: ChromaDB stores document chunks in local SQLite format, avoiding overhead of external databases.
 
 4. **Ensemble Retrieval**: BM25 keyword matching runs in parallel with semantic search to guarantee precision.
+
+5. **Reranker Pipeline**: The custom reranker ranks high-recall documents based on overlapping keywords and phrases.
