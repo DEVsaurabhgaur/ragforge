@@ -311,3 +311,7 @@ MIT License — see [LICENSE](LICENSE) for details.
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/saurabhgaur)
 
 </div>
+
+## ⚡ Quick Project Reference Notes
+
+* **License**: RAGForge is licensed under the MIT License.
