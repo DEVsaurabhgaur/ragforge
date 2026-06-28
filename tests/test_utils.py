@@ -53,6 +53,7 @@ def test_estimate_cost_openai():
 
 
 def test_estimate_cost_gemini():
+    """Verify estimate_cost returns non-zero value for Gemini models."""
     cost = estimate_cost(10000, 5000, provider="gemini")
     assert cost > 0
     assert cost < estimate_cost(10000, 5000, provider="openai")
