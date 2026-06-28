@@ -77,6 +77,7 @@ def test_get_file_size_mb_returns_float():
 
 
 def test_get_file_size_mb_empty_file():
+    """Verify get_file_size_mb returns 0.0 for empty files."""
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as tmp:
         tmp_path = tmp.name
     try:
