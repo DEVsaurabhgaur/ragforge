@@ -153,3 +153,5 @@ ragforge/
 7. **Re-entrancy in config**: `config.py` validates values at startup, throwing errors early if variables are invalid.
 
 8. **Resource Isolation**: Uploaded files are moved to `uploaded_docs` for indexing, isolating system folders.
+
+9. **Precompiled Regex Performance**: Precompiling expressions in `utils.py` saves CPU overhead on large inputs.
