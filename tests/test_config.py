@@ -10,6 +10,7 @@ def test_chunk_size_positive():
 
 
 def test_chunk_overlap_less_than_size():
+    """Verify CHUNK_OVERLAP is strictly smaller than CHUNK_SIZE."""
     assert config.CHUNK_OVERLAP < config.CHUNK_SIZE
 
 
