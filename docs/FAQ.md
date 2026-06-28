@@ -57,3 +57,5 @@ If detected, it replaces the response with a standard safe fallback message.
 3. **Local Embeddings RAM**: The `all-MiniLM-L6-v2` model is cached locally in `~/.cache/torch` or similar directory.
 
 4. **Custom Storage Directories**: You can override the ChromaDB and upload directories by editing `config.py` or `.env` variables.
+
+5. **Session File Cleanup**: Old json sessions in `.sessions/` can be deleted manually to free up disk space.
