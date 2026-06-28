@@ -69,3 +69,5 @@ If detected, it replaces the response with a standard safe fallback message.
 9. **Docker Resource Limits**: Assign at least 2GB of memory to Docker containers to prevent PyTorch crash during model loading.
 
 10. **Custom Chunk Size**: Ensure chunk overlap is always strictly smaller than chunk size to prevent ingestion looping.
+
+11. **Keyword Overlap Reranking**: Case sensitivity is stripped out during keyword matching to optimize overlap retrieval.
