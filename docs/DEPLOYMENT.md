@@ -121,3 +121,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 10. **Disable Streamlit CORS**: Set `CORS = false` in Streamlit configuration if deployment is behind a secure VPN gateway.
 
 11. **Tiktoken offline usage**: Tiktoken fetches files from public URLs during first run. Pre-download them if deploying offline.
+
+12. **Gevent / Eventlet Compatibility**: Streamlit utilizes websockets; avoid event-loop monkeypatching during initialization.
