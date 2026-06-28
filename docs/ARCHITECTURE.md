@@ -143,3 +143,5 @@ ragforge/
 2. **State Management**: Streamlit `session_state` is used to persist chat history, loaded files, and configurations.
 
 3. **ChromaDB Backend**: ChromaDB stores document chunks in local SQLite format, avoiding overhead of external databases.
+
+4. **Ensemble Retrieval**: BM25 keyword matching runs in parallel with semantic search to guarantee precision.
