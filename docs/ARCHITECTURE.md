@@ -161,3 +161,5 @@ ragforge/
 11. **Fallback Cost Calculation**: For custom or non-standard models, fallback prices match Gemini/OpenAI defaults.
 
 12. **Vectorstore caching**: Stores references to Chroma instances to prevent double-initialization locks.
+
+13. **Markdown Export Format**: Standardizes conversational downloads to follow clean GitHub Markdown syntax.
