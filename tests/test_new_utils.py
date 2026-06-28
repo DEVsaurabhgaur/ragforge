@@ -24,6 +24,7 @@ def test_word_count_empty():
 
 
 def test_word_count_single_word():
+    """Verify word_count returns 1 for a single word."""
     assert word_count("RAGForge") == 1
 
 
