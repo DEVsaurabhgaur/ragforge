@@ -157,3 +157,5 @@ ragforge/
 9. **Precompiled Regex Performance**: Precompiling expressions in `utils.py` saves CPU overhead on large inputs.
 
 10. **Conversational Reformulation**: The reformulator rewrites user queries to resolve ambiguous pronouns (e.g. 'it').
+
+11. **Fallback Cost Calculation**: For custom or non-standard models, fallback prices match Gemini/OpenAI defaults.
