@@ -90,3 +90,5 @@ Please open a GitHub issue with:
 ## 🛠️ Code Conventions & Standards Details
 
 1. **Type Annotations**: Always declare input and output types for all public utility and pipeline functions.
+
+2. **Docstrings Style**: Use Google Style Python docstrings with Args, Returns, and Raises sections.
