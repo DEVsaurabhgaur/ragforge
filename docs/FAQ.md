@@ -75,3 +75,5 @@ If detected, it replaces the response with a standard safe fallback message.
 12. **Hallucination Guard Phrase**: Standard refusal phrases can be expanded in `rag_pipeline.py` if custom LLMs are used.
 
 13. **Diagnostics Logs**: Access the diagnostics foldout in Streamlit UI for API call latencies and vectorstore status.
+
+14. **Custom PDF parsing**: For scanned PDFs, verify that PyPDF extracts characters; scanned-image PDFs require OCR.
