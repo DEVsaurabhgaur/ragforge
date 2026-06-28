@@ -331,3 +331,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **Citations**: Click source annotations in responses to see exact documents and pages.
 
 * **Security**: Hallucination validation guards against system prompts leakage.
+
+* **Developer Setup**: Install developer requirements using `pip install -r requirements-dev.txt`.
