@@ -64,6 +64,7 @@ def test_sanitize_filename_empty():
 
 
 def test_get_file_size_mb_returns_float():
+    """Verify get_file_size_mb returns a valid float value."""
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as tmp:
         tmp.write(b"x" * 1024)  # 1 KB
         tmp_path = tmp.name
