@@ -107,3 +107,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 3. **Reverse Proxying**: When routing through Nginx or Apache, ensure websocket support is enabled for Streamlit.
 
 4. **Secure API Key Handling**: Never hardcode API keys in `config.py`. Use environment variables or secret managers.
+
+5. **Persistent Storage**: Mount the `chroma_db` folder as a Docker volume to persist index databases across container restarts.
