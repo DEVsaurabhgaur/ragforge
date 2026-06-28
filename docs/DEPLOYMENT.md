@@ -123,3 +123,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 11. **Tiktoken offline usage**: Tiktoken fetches files from public URLs during first run. Pre-download them if deploying offline.
 
 12. **Gevent / Eventlet Compatibility**: Streamlit utilizes websockets; avoid event-loop monkeypatching during initialization.
+
+13. **Temp directories cleanups**: Clean up `/tmp` or local `uploaded_docs` via a cron job to avoid disk space exhaustion.
