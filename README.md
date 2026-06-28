@@ -319,3 +319,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **Python Requirements**: Supports Python versions 3.10 and newer.
 
 * **API Key Free Tier**: Supports local HuggingFace embeddings out of the box.
+
+* **Docker Execution**: Run `docker-compose up -d` for single-command start.
