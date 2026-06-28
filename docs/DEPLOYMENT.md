@@ -127,3 +127,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 13. **Temp directories cleanups**: Clean up `/tmp` or local `uploaded_docs` via a cron job to avoid disk space exhaustion.
 
 14. **Gemini API Limits**: Free tier Gemini has rate limits (RPM/TPM). Configure delay controls or request quota increases.
+
+15. **System Prompt Updates**: Changes to presets in `config.py` require a service restart to take effect.
