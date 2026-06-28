@@ -13,6 +13,7 @@ from utils import (
 
 
 def test_clean_text_collapses_spaces():
+    """Verify clean_text collapses multiple consecutive spaces."""
     assert "  " not in clean_text("hello   world")
 
 
