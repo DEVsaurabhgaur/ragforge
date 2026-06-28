@@ -35,6 +35,7 @@ def test_truncate_returns_full_when_short():
 
 
 def test_format_source_display():
+    """Verify source reference formatting includes name and page."""
     result = format_source_display("report.pdf", 3)
     assert "report.pdf" in result
     assert "3" in result
