@@ -98,3 +98,5 @@ Please open a GitHub issue with:
 4. **Logging Levels**: Use `logging.info()` for pipeline progression and `logging.error()` for critical failures.
 
 5. **RegEx Precompilation**: Precompile heavy regular expressions at the module level for performance optimization.
+
+6. **Test Independence**: Every test should utilize temporary directories or mock setups to ensure zero side-effects.
