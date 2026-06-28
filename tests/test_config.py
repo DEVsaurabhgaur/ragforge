@@ -40,6 +40,7 @@ def test_default_system_prompt_not_empty():
 
 
 def test_retrieval_mode_valid():
+    """Verify retrieval mode is set to hybrid or semantic."""
     assert config.RETRIEVAL_MODE in ("hybrid", "semantic")
 
 
