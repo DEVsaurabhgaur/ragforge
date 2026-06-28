@@ -109,3 +109,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 4. **Secure API Key Handling**: Never hardcode API keys in `config.py`. Use environment variables or secret managers.
 
 5. **Persistent Storage**: Mount the `chroma_db` folder as a Docker volume to persist index databases across container restarts.
+
+6. **Multiple Users Concurrent Access**: RAGForge uses local locks to avoid multi-write collisions on the SQLite backend of Chroma.
