@@ -18,6 +18,7 @@ def test_clean_text_collapses_spaces():
 
 
 def test_clean_text_removes_extra_newlines():
+    """Verify clean_text removes excessive blank lines."""
     assert "\n\n\n" not in clean_text("line1\n\n\nline2")
 
 
