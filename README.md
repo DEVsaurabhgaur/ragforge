@@ -325,3 +325,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **UI Configuration**: Tweak temperatures, retrieval models, and system prompts in real-time.
 
 * **Session persistence**: Saving and loading conversation histories is supported via local JSON.
+
+* **Token Estimations**: Displays token count and USD pricing for transparency.
