@@ -59,3 +59,5 @@ If detected, it replaces the response with a standard safe fallback message.
 4. **Custom Storage Directories**: You can override the ChromaDB and upload directories by editing `config.py` or `.env` variables.
 
 5. **Session File Cleanup**: Old json sessions in `.sessions/` can be deleted manually to free up disk space.
+
+6. **Tiktoken Encoding**: For non-OpenAI models, a fallback char-length heuristic is used to avoid Tiktoken load overhead.
