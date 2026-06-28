@@ -103,3 +103,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 1. **Docker Compose Logs**: Run `docker-compose logs --tail=100 -f` to monitor active user query statuses.
 
 2. **HuggingFace Spaces Cache**: Configure `HF_HOME` environment variable if cache write permissions are restricted on HuggingFace.
+
+3. **Reverse Proxying**: When routing through Nginx or Apache, ensure websocket support is enabled for Streamlit.
