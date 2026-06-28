@@ -45,6 +45,7 @@ def test_sanitize_filename_removes_special_chars():
 
 
 def test_sanitize_filename_replaces_spaces_with_underscores():
+    """Verify sanitize_filename replaces spaces with underscores."""
     result = sanitize_filename("my file name")
     assert " " not in result
     assert "_" in result
