@@ -113,3 +113,5 @@ docker inspect --format='{{.State.Health.Status}}' <container_id>
 6. **Multiple Users Concurrent Access**: RAGForge uses local locks to avoid multi-write collisions on the SQLite backend of Chroma.
 
 7. **Memory Constraints**: Local embed models load in RAM; scale instances based on expected concurrent uploads.
+
+8. **Health check endpoint**: Monitor `http://localhost:8501/_stcore/health` via Prometheus or other pinging daemons.
