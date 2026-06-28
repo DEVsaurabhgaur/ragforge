@@ -112,3 +112,5 @@ Please open a GitHub issue with:
 11. **Streamlit UI Components**: Place all user-facing interactive elements inside sidebar or main container cleanly.
 
 12. **Vectorstore Cache Lifecycle**: Call `clear_vectorstore_cache()` when resets or configuration modifications are made.
+
+13. **Token Usage Precision**: tiktoken is the source of truth for token counting; fallback counts are estimates only.
