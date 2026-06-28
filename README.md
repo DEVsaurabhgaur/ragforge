@@ -321,3 +321,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **API Key Free Tier**: Supports local HuggingFace embeddings out of the box.
 
 * **Docker Execution**: Run `docker-compose up -d` for single-command start.
+
+* **UI Configuration**: Tweak temperatures, retrieval models, and system prompts in real-time.
