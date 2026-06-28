@@ -92,3 +92,5 @@ Please open a GitHub issue with:
 1. **Type Annotations**: Always declare input and output types for all public utility and pipeline functions.
 
 2. **Docstrings Style**: Use Google Style Python docstrings with Args, Returns, and Raises sections.
+
+3. **Error Handling**: Use broad except blocks sparingly. Catch specific exceptions (e.g. FileNotFoundError, ValueError).
