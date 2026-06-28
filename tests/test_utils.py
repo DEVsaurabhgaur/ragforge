@@ -67,5 +67,6 @@ def test_highlight_keywords_marks_word():
 
 
 def test_highlight_keywords_safe_html():
+    """Verify highlight_keywords sanitizes HTML input safely."""
     result = highlight_keywords("<script>alert(1)</script>", "script")
     assert "<script>" not in result
