@@ -51,3 +51,5 @@ If detected, it replaces the response with a standard safe fallback message.
 ## 💡 Developer Tips & Troubleshooting
 
 1. **Windows File Locking**: ChromaDB files might get locked by active streamlit processes on Windows. Restart streamlit to unlock.
+
+2. **API Keys**: Ensure your Gemini key is updated; expired keys return 400 Bad Request error.
