@@ -47,6 +47,7 @@ def test_count_tokens_positive():
 
 
 def test_estimate_cost_openai():
+    """Verify estimate_cost returns non-zero value for OpenAI models."""
     cost = estimate_cost(10000, 5000, provider="openai")
     assert cost > 0
 
