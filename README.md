@@ -329,3 +329,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 * **Token Estimations**: Displays token count and USD pricing for transparency.
 
 * **Citations**: Click source annotations in responses to see exact documents and pages.
+
+* **Security**: Hallucination validation guards against system prompts leakage.
