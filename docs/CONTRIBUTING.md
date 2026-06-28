@@ -110,3 +110,5 @@ Please open a GitHub issue with:
 10. **Conventional Commit Types**: Use `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore` tags in commit titles.
 
 11. **Streamlit UI Components**: Place all user-facing interactive elements inside sidebar or main container cleanly.
+
+12. **Vectorstore Cache Lifecycle**: Call `clear_vectorstore_cache()` when resets or configuration modifications are made.
