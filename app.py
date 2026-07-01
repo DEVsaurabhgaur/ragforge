@@ -594,6 +594,7 @@ with st.sidebar:
     )
 
     if uploaded_files:
+            # Ensure upload, db and temporary folders exist locally
         # Guard: check document count limit
         if len(uploaded_files) > config.MAX_DOCUMENTS:
             st.warning(f"⚠️ You uploaded {len(uploaded_files)} files, but the limit is {config.MAX_DOCUMENTS} per session. Only the first {config.MAX_DOCUMENTS} will be ingested.")
