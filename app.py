@@ -24,6 +24,14 @@ from utils import (
     clear_upload_dir,
     sanitize_filename
 )
+def log_diagnostic(msg: str):
+    """Add a diagnostic log entry with timestamp."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if "logs" not in st.session_state:
+        st.session_state["logs"] = []
+    st.session_state["logs"].append(f"[{timestamp}] {msg}")
+    logging.info(msg)
+
 
 # ── Page Config ────────────────────────────────────────────────
 st.set_page_config(
@@ -52,13 +60,6 @@ if "doc_names" not in st.session_state:
 
 if "current_session_file" not in st.session_state:
     st.session_state["current_session_file"] = ""
-
-
-def log_diagnostic(msg: str):
-    """Add a diagnostic log entry with timestamp."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    st.session_state["logs"].append(f"[{timestamp}] {msg}")
-    logging.info(msg)
 
 
 # ── Custom CSS for Rich Aesthetics ─────────────────────────────
