@@ -21,7 +21,8 @@ from utils import (
     ensure_dirs,
     truncate_text,
     highlight_keywords,
-    clear_upload_dir
+    clear_upload_dir,
+    sanitize_filename
 )
 
 # ── Page Config ────────────────────────────────────────────────
@@ -628,7 +629,8 @@ with st.sidebar:
                         continue
                     seen_filenames.add(f.name)
                     status_text.text(f"Saving {f.name}...")
-                    save_path = os.path.join(config.UPLOAD_DIR, f.name)
+                    safe_name = sanitize_filename(os.path.basename(f.name))
+                    save_path = os.path.join(config.UPLOAD_DIR, safe_name)
                     
                     try:
                         with open(save_path, "wb") as out:
