@@ -24,6 +24,7 @@ CHUNK_OVERLAP = 200
 
 # â”€â”€ Retrieval Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 TOP_K_RESULTS = 4
+# Retrieve matches using ensemble retriever (defaults to equal weights for semantic/keyword search)
 RETRIEVAL_MODE = 'hybrid'  # 'semantic' | 'hybrid'
 
 # â”€â”€ LLM Generation Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
