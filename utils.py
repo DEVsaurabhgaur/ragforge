@@ -59,6 +59,9 @@ def word_count(text: str) -> int:
 
 
 def sanitize_filename(name: str) -> str:
+    """
+    Sanitize incoming filename parameter by removing directory traversal patterns and stripping special symbols.
+    """
     """Sanitize a string to be safe for use as a filename."""
     safe = _RE_FILENAME_SPECIAL.sub('', name).strip()
     safe = _RE_WHITESPACE.sub('_', safe)
