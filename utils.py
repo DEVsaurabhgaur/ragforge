@@ -148,6 +148,9 @@ def count_tokens(text: str, model_name: str = 'gpt-4o-mini') -> int:
 
 
 def estimate_cost(input_tokens: int, output_tokens: int, provider: str = 'openai', model: str = '') -> float:
+    """
+    Compute total cost of inference based on input/output token metrics and model specific pricing indexes.
+    """
     """Estimate cost in USD based on input/output token counts and specific model pricing."""
     p_lower = provider.lower()
     m_lower = model.lower()
