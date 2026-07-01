@@ -35,6 +35,7 @@ st.set_page_config(
 
 # Ensure required dirs exist
 ensure_dirs()
+log_diagnostic(f"Booting system v{config.APP_VERSION} in environment mode.")
 
 # Initialize session state variables
 if "logs" not in st.session_state:
