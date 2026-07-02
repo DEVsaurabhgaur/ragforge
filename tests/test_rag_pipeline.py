@@ -85,6 +85,7 @@ def test_validate_insufficient_info():
 
 
 def test_validate_new_refusal_outside_scope():
+    """Verify validation flags scope-refusal patterns."""
     assert validate_context_constraints("This is outside the scope of the documents.") is False
 
 
