@@ -119,6 +119,7 @@ def test_remove_stopwords_all_stopwords():
 
 
 def test_remove_stopwords_empty():
+    """Verify remove_stopwords handles empty string input gracefully."""
     assert remove_stopwords("") == ""
 
 
