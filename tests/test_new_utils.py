@@ -146,6 +146,7 @@ def test_valid_collection_name_with_hyphens():
 
 
 def test_invalid_collection_name_too_short():
+    """Verify collection name validation rejects names under 3 characters."""
     assert is_valid_collection_name("ab") is False
 
 
