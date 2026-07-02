@@ -46,6 +46,7 @@ def test_rerank_with_empty_query():
 
 
 def test_rerank_empty_docs():
+    """Verify rerank_documents handles empty list input gracefully."""
     result = rerank_documents([], "some query")
     assert result == []
 
