@@ -105,6 +105,7 @@ def test_load_unsupported_extension_returns_empty_or_attempts_fallback():
 
 
 def test_load_empty_file_returns_no_useful_chunks():
+    """Verify loader ignores files without useful text contents."""
     path = write_temp_file("", ".txt")
     try:
         chunks = load_and_split_document(path)
