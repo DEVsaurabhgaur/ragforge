@@ -14,6 +14,7 @@ import config
 
 
 def reset_db():
+    """Purge vector store collection database and upload directory contents."""
     if os.path.exists(config.CHROMA_DB_DIR):
         try:
             shutil.rmtree(config.CHROMA_DB_DIR)
