@@ -57,6 +57,7 @@ def test_load_sets_source_file_metadata():
 
 
 def test_load_sets_page_metadata():
+    """Verify loader metadata defaults to page metadata index tracking."""
     path = write_temp_file("Some content.\n" * 30, ".txt")
     try:
         chunks = load_and_split_document(path)
