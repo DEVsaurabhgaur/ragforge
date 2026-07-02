@@ -88,6 +88,7 @@ def test_get_file_size_mb_empty_file():
 
 
 def test_clean_text_strips_whitespace():
+    """Verify clean_text strips leading and trailing whitespace."""
     result = clean_text("   hello   ")
     assert result == "hello"
 
