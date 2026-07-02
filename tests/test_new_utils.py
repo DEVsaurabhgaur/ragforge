@@ -176,6 +176,7 @@ def test_invalid_collection_name_consecutive_dots():
 
 
 def test_invalid_collection_name_ipv4():
+    """Verify collection name validation rejects IP address patterns."""
     assert is_valid_collection_name("127.0.0.1") is False
 
 
