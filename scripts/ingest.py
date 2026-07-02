@@ -10,6 +10,7 @@ from rag_pipeline import build_vectorstore
 
 
 def main():
+    """Ingest command line argument documents into ChromaDB vectorstore."""
     paths = sys.argv[1:]
     if not paths:
         print("Usage: python scripts/ingest.py <file1> [file2 ...]")
