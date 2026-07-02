@@ -161,6 +161,7 @@ def test_invalid_collection_name_special_chars():
 
 
 def test_invalid_collection_name_starts_with_underscore():
+    """Verify collection name validation rejects names beginning with underscore."""
     assert is_valid_collection_name("_mycoll") is False
 
 
