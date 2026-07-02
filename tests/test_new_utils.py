@@ -156,6 +156,7 @@ def test_invalid_collection_name_too_long():
 
 
 def test_invalid_collection_name_special_chars():
+    """Verify collection name validation rejects invalid symbols."""
     assert is_valid_collection_name("my collection!") is False
 
 
