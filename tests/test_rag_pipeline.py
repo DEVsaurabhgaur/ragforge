@@ -80,6 +80,7 @@ def test_validate_refusal_not_in_context():
 
 
 def test_validate_insufficient_info():
+    """Verify validation flags standard lack-of-information answers."""
     assert validate_context_constraints("There is insufficient information to answer.") is False
 
 
