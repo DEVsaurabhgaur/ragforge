@@ -124,6 +124,7 @@ def test_remove_stopwords_empty():
 
 
 def test_remove_stopwords_preserves_non_stopwords():
+    """Verify remove_stopwords preserves meaningful vocabulary terms."""
     result = remove_stopwords("machine learning algorithms")
     assert "machine" in result
     assert "learning" in result
