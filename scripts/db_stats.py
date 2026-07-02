@@ -13,6 +13,7 @@ from rag_pipeline import load_existing_vectorstore, vectorstore_exists
 
 
 def main():
+    """Execute ChromaDB metadata statistics inspection and report results."""
     use_json = "--json" in sys.argv
 
     if not vectorstore_exists():
