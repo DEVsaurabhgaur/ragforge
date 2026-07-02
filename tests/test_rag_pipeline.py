@@ -52,6 +52,7 @@ def test_rerank_empty_docs():
 
 
 def test_rerank_phrase_match_boosts_score():
+    """Verify exact phrase matching boosts scoring metric in reranking."""
     docs = [
         make_doc("this has the exact phrase: machine learning overview"),
         make_doc("machine overview learning random words"),
