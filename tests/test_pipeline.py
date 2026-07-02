@@ -82,6 +82,7 @@ def test_load_filters_tiny_chunks():
 
 
 def test_load_custom_chunk_size():
+    """Verify chunk generation count responds to chunk size parameters."""
     path = write_temp_file("Word " * 500, ".txt")
     try:
         chunks_small = load_and_split_document(path, chunk_size=200, chunk_overlap=50)
