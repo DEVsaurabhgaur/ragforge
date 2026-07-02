@@ -20,6 +20,7 @@ def write_temp_file(content: str, suffix: str) -> str:
 # ── load_and_split_document ─────────────────────────────────────────────────
 
 def test_load_txt_returns_chunks():
+    """Verify standard text file loader successfully splits content into chunks."""
     path = write_temp_file("Hello world.\nThis is RAGForge testing.\n" * 50, ".txt")
     try:
         chunks = load_and_split_document(path)
