@@ -181,6 +181,7 @@ def test_invalid_collection_name_ipv4():
 
 
 def test_estimate_cost_specific_models():
+    """Verify cost estimation model hierarchy scales correctly with models."""
     from utils import estimate_cost
     # gpt-4o should be more expensive than gpt-4o-mini
     cost_mini = estimate_cost(1000, 500, provider="openai", model="gpt-4o-mini")
