@@ -105,6 +105,7 @@ from utils import remove_stopwords
 
 
 def test_remove_stopwords_basic():
+    """Verify remove_stopwords filters out common English stopwords."""
     result = remove_stopwords("the quick brown fox")
     assert "the" not in result.split()
     assert "quick" in result
