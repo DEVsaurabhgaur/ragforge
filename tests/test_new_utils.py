@@ -136,6 +136,7 @@ from utils import is_valid_collection_name
 
 
 def test_valid_collection_name():
+    """Verify that a standard alphanumeric collection name is marked valid."""
     assert is_valid_collection_name("ragforge_docs") is True
 
 
