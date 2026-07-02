@@ -65,6 +65,7 @@ def test_rerank_phrase_match_boosts_score():
 # ── validate_context_constraints ─────────────────────────────────────────────
 
 def test_validate_valid_answer():
+    """Verify validation passes for an answer indicating positive information."""
     assert validate_context_constraints("The capital of France is Paris.") is True
 
 
