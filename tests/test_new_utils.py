@@ -203,6 +203,7 @@ def test_format_source_display_edge_cases():
 
 
 def test_clean_text_edge_cases():
+    """Verify text cleaning handles empty and non-printable characters."""
     from utils import clean_text
     assert clean_text("") == ""
     # Only non-printable chars should yield empty string
