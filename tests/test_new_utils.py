@@ -113,6 +113,7 @@ def test_remove_stopwords_basic():
 
 
 def test_remove_stopwords_all_stopwords():
+    """Verify remove_stopwords returns empty string when only stopwords are passed."""
     result = remove_stopwords("a an the and or")
     assert result.strip() == ""
 
