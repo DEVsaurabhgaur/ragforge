@@ -171,6 +171,7 @@ def test_valid_collection_name_with_dots():
 
 
 def test_invalid_collection_name_consecutive_dots():
+    """Verify collection name validation rejects consecutive dots."""
     assert is_valid_collection_name("my..collection") is False
 
 
