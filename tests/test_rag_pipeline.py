@@ -75,6 +75,7 @@ def test_validate_refusal_phrase():
 
 
 def test_validate_refusal_not_in_context():
+    """Verify validation flags context-missing response patterns."""
     assert validate_context_constraints("This is not in the provided context.") is False
 
 
