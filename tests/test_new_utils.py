@@ -141,6 +141,7 @@ def test_valid_collection_name():
 
 
 def test_valid_collection_name_with_hyphens():
+    """Verify collection name validation accepts names containing hyphens."""
     assert is_valid_collection_name("my-collection-1") is True
 
 
