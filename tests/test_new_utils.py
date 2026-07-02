@@ -151,6 +151,7 @@ def test_invalid_collection_name_too_short():
 
 
 def test_invalid_collection_name_too_long():
+    """Verify collection name validation rejects names over 63 characters."""
     assert is_valid_collection_name("a" * 64) is False
 
 
