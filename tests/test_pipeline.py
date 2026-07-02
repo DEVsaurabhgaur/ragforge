@@ -32,6 +32,7 @@ def test_load_txt_returns_chunks():
 
 
 def test_load_md_returns_chunks():
+    """Verify markdown loader splits markdown structure into chunks."""
     path = write_temp_file(
         "# Title\n\nThis is a markdown document.\n\n" * 40,
         ".md"
