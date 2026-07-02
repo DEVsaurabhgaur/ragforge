@@ -29,6 +29,7 @@ def test_rerank_returns_all_docs():
 
 
 def test_rerank_puts_best_match_first():
+    """Verify rerank_documents places highest scoring match at the first index."""
     docs = [
         make_doc("completely unrelated content here"),
         make_doc("machine learning algorithms and neural networks"),
