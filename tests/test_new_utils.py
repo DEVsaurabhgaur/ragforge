@@ -195,6 +195,7 @@ def test_estimate_cost_specific_models():
 
 
 def test_format_source_display_edge_cases():
+    """Verify source reference formatting behaves correctly with missing page."""
     from utils import format_source_display
     assert format_source_display("doc.txt", None) == "doc.txt — Page N/A"
     assert format_source_display("doc.txt", "") == "doc.txt — Page N/A"
