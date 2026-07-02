@@ -22,6 +22,7 @@ def make_doc(content: str, source: str = "test.pdf", page: int = 0) -> Document:
 # ── rerank_documents ──────────────────────────────────────────────────────────
 
 def test_rerank_returns_all_docs():
+    """Verify rerank_documents returns the complete set of input documents."""
     docs = [make_doc("apple banana cherry"), make_doc("delta echo foxtrot")]
     result = rerank_documents(docs, "apple")
     assert len(result) == 2
