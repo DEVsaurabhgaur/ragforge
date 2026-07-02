@@ -45,6 +45,7 @@ def test_load_md_returns_chunks():
 
 
 def test_load_sets_source_file_metadata():
+    """Verify loader metadata tracks source filename correctly."""
     path = write_temp_file("Content for testing metadata.\n" * 30, ".txt")
     filename = Path(path).name
     try:
