@@ -70,6 +70,7 @@ def test_validate_valid_answer():
 
 
 def test_validate_refusal_phrase():
+    """Verify validation flags standard search failure refusal phrases."""
     assert validate_context_constraints("I could not find this in the documents.") is False
 
 
