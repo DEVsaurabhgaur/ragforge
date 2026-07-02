@@ -94,6 +94,7 @@ def test_clean_text_strips_whitespace():
 
 
 def test_truncate_text_exact_boundary():
+    """Verify truncate_text does not truncate if length matches limit exactly."""
     text = "one two"
     result = truncate_text(text, 7)
     assert result == "one two"
