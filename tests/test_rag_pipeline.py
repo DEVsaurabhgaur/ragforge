@@ -95,6 +95,7 @@ def test_validate_new_refusal_cannot_find():
 
 
 def test_validate_case_insensitive():
+    """Verify context constraint validation is case-insensitive."""
     assert validate_context_constraints("NO RELEVANT INFORMATION was found.") is False
 
 
