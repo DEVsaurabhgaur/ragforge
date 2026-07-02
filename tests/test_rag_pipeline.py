@@ -109,6 +109,7 @@ def test_clear_vectorstore_cache_runs():
 # ── reformulate_question ──────────────────────────────────────────────────────
 
 def test_reformulate_no_history_returns_original():
+    """Verify question reformulation returns original query when chat history is empty."""
     mock_llm = MagicMock()
     result = reformulate_question("What is the summary?", [], mock_llm)
     assert result == "What is the summary?"
