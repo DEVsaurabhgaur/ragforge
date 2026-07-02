@@ -90,6 +90,7 @@ def test_validate_new_refusal_outside_scope():
 
 
 def test_validate_new_refusal_cannot_find():
+    """Verify validation flags search failure phrases."""
     assert validate_context_constraints("I cannot find this information in the context.") is False
 
 
