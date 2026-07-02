@@ -39,6 +39,7 @@ def test_rerank_puts_best_match_first():
 
 
 def test_rerank_with_empty_query():
+    """Verify rerank_documents returns documents unaltered with empty query."""
     docs = [make_doc("hello world"), make_doc("foo bar")]
     result = rerank_documents(docs, "")
     assert len(result) == 2
